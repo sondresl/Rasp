@@ -1,5 +1,5 @@
+#![feature(range_contains)]
 mod scanner;
-
 use scanner::scanner::scan;
 
 fn main() {
