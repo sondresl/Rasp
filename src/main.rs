@@ -1,3 +1,7 @@
+mod scanner;
+
+use scanner::scanner::scan;
+
 fn main() {
-    println!("Hello, world!");
+    scan("asp/mini.asp");
 }
