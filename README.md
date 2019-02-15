@@ -5,5 +5,5 @@ of Python.
 
 ### Authors:
 
-Sondre Lunde
+Sondre Lunde  
 Gaute Berge
