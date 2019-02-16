@@ -22,28 +22,29 @@ fn scan_line(line: String) -> Result<(),()> {
     let mut index = 0;
     while index < vec.len() {
         let c = vec[index];
+        // match returns a token, and how much index should increment
         let (token, i) = match c {
-            '='  => (Token::Equal,  index+1),
-            ','  => (Token::Comma,  index+1),
-            '('  => (Token::LeftPar,index+1),
-            ')'  => (Token::RightPar,index+1),
-            '\'' => (scan_string(&vec, index)),
+            '='  => (Token::Equal,    1),
+            ','  => (Token::Comma,    1),
+            '('  => (Token::LeftPar,  1),
+            ')'  => (Token::RightPar, 1),
+            '\'' => (scan_string(&vec[index+1..])),
             '_'       |
             'a'...'z' |
-            'A'...'Z' => scan_name(&vec, index),
-             _   => { index += 1;continue; }
+            'A'...'Z' => scan_name(&vec[index..]),
+             _   => { index += 1; continue; }
         };
-        index = i;
+        index += i;
         print!("{:?} ", token);
     }
     println!("{:?}", Token::Newline);
     Ok(())
 }
 
-fn scan_name(chars: &[char], index: usize) -> (Token, usize) {
-    let mut count = index;
+fn scan_name(chars: &[char]) -> (Token, usize) {
+    let mut count = 0;
     let mut name = String::new();
-    for c in chars[index..].iter() {
+    for c in chars.iter() {
         if !(c.is_alphanumeric() || *c == '_') { break; }
         name.push(*c);
         count += 1;
@@ -51,10 +52,10 @@ fn scan_name(chars: &[char], index: usize) -> (Token, usize) {
     (Token::Name(name), count)
 }
 
-fn scan_string(chars: &[char], index: usize) -> (Token,usize) {
-    let mut count = index+1;
+fn scan_string(chars: &[char]) -> (Token, usize) {
+    let mut count = 1;
     let mut string = String::new();
-    for c in chars[(index+1)..].iter() {
+    for c in chars.iter() {
         count += 1;
         if *c == '\'' { break; }
         string.push(*c);
