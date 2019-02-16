@@ -2,16 +2,16 @@ use std::fs::File;
 use std::io::{BufReader,BufRead};
 use std::io;
 use super::token::Token;
-use std::str::Chars;
 use std::result::Result::Ok;
 
 pub fn scan(filename: &str) -> io::Result<()> {
     let file = File::open(filename)?;
-    let mut reader = BufReader::new(file);
+    let reader = BufReader::new(file);
     for (i, line) in reader.lines().enumerate() {
         let line = line?.clone();
         if line.is_empty() || line.starts_with("#") { continue; }
-        scan_line(line.as_str());
+        scan_line(line.as_str())
+            .expect(&format!("Failed to scan line {} ", i));
     }
     Ok(())
 }
