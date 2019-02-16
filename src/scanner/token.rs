@@ -7,5 +7,6 @@ pub enum Token {
     LeftPar,
     RightPar,
     Comma,
-    Newline
+    Newline,
+    EoF
 }

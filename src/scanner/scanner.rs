@@ -3,6 +3,7 @@ use std::io::{BufReader,BufRead};
 use std::io;
 use super::token::Token;
 use std::str::Chars;
+use std::result::Result::Ok;
 
 pub fn scan(filename: &str) -> io::Result<()> {
     let file = File::open(filename)?;
@@ -16,49 +17,46 @@ pub fn scan(filename: &str) -> io::Result<()> {
 }
 
 fn scan_line(line: &str) -> Result<(),()> {
-//    let mut buf: Vec<Char> = vec![];
-    let mut char_iter: Chars = line.chars();
-    let mut c = char_iter.next();
-    dbg!(line);
-    while c.is_some() {
-        let token = match c.unwrap() {
-            '='  => Some(Token::Equal),
-            ','  => Some(Token::Comma),
-            '('  => Some(Token::LeftPar),
-            ')'  => Some(Token::RightPar),
-            '\'' => Some(Token::StringLiteral(scan_string(c.unwrap(),&mut char_iter))),
+    let vec: Vec<char> = line.chars().collect();
+    let mut index = 0;
+    while index < vec.len() {
+        let c = vec[index];
+        let (token, i) = match c {
+            '='  => (Token::Equal,  index+1),
+            ','  => (Token::Comma,  index+1),
+            '('  => (Token::LeftPar,index+1),
+            ')'  => (Token::RightPar,index+1),
+            '\'' => (scan_string(&vec, index)),
             '_'       |
             'a'...'z' |
-            'A'...'Z' => Some(Token::Name(scan_name(c.unwrap(),&mut char_iter))),
-             _   => None
+            'A'...'Z' => scan_name(&vec, index),
+             _   => { index += 1;continue; }
         };
-        c = char_iter.next();
-        if token.is_none() { continue }
-        println!("{:?}", token.unwrap());
+        index = i;
+        println!("{:?}", token);
     }
     println!("{:?}", Token::Newline);
     Ok(())
 }
 
-fn scan_name(c: char, cs: &mut Chars) -> String {
-    let mut name = c.to_string();
-    let mut c = cs.next();
-    while c.is_some() {
-        if !(c.unwrap().is_alphanumeric() || c.unwrap() == '_') { break }
-        name.push(c.unwrap());
-        c = cs.next();
+fn scan_name(vec: &[char], index: usize) -> (Token, usize) {
+    let mut count = index;
+    let mut name = String::new();
+    for c in vec[index..].iter() {
+        if !(c.is_alphanumeric() || *c == '_') { break; }
+        name.push(*c);
+        count += 1;
     }
-    cs.next_back();
-    name
+    (Token::Name(name), count)
 }
 
-fn scan_string(c: char, cs: &mut Chars) -> String {
-    let mut name = c.to_string();
-    let mut c = cs.next();
-    while c.is_some() {
-        name.push(c.unwrap());
-        if c.unwrap() == '\'' { break }
-        c = cs.next();
+fn scan_string(vec: &[char], index: usize) -> (Token,usize) {
+    let mut count = index+1;
+    let mut string = String::new();
+    for c in vec[(index+1)..].iter() {
+        count += 1;
+        if *c == '\'' { break; }
+        string.push(*c);
     }
-    return name;
+    return (Token::StringLiteral(string), count);
 }
