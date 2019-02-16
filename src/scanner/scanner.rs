@@ -8,15 +8,16 @@ pub fn scan(filename: &str) -> io::Result<()> {
     let file = File::open(filename)?;
     let reader = BufReader::new(file);
     for (i, line) in reader.lines().enumerate() {
-        let line = line?.clone();
+        let line = line?;
         if line.is_empty() || line.starts_with("#") { continue; }
-        scan_line(line.as_str())
+        scan_line(line)
             .expect(&format!("Failed to scan line {} ", i));
     }
+    println!("{:?}", Token::EoF);
     Ok(())
 }
 
-fn scan_line(line: &str) -> Result<(),()> {
+fn scan_line(line: String) -> Result<(),()> {
     let vec: Vec<char> = line.chars().collect();
     let mut index = 0;
     while index < vec.len() {
@@ -33,16 +34,16 @@ fn scan_line(line: &str) -> Result<(),()> {
              _   => { index += 1;continue; }
         };
         index = i;
-        println!("{:?}", token);
+        print!("{:?} ", token);
     }
     println!("{:?}", Token::Newline);
     Ok(())
 }
 
-fn scan_name(vec: &[char], index: usize) -> (Token, usize) {
+fn scan_name(chars: &[char], index: usize) -> (Token, usize) {
     let mut count = index;
     let mut name = String::new();
-    for c in vec[index..].iter() {
+    for c in chars[index..].iter() {
         if !(c.is_alphanumeric() || *c == '_') { break; }
         name.push(*c);
         count += 1;
@@ -50,10 +51,10 @@ fn scan_name(vec: &[char], index: usize) -> (Token, usize) {
     (Token::Name(name), count)
 }
 
-fn scan_string(vec: &[char], index: usize) -> (Token,usize) {
+fn scan_string(chars: &[char], index: usize) -> (Token,usize) {
     let mut count = index+1;
     let mut string = String::new();
-    for c in vec[(index+1)..].iter() {
+    for c in chars[(index+1)..].iter() {
         count += 1;
         if *c == '\'' { break; }
         string.push(*c);
