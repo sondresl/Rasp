@@ -44,22 +44,22 @@ fn scan_line_tokens(line: String, tokens: &mut VecDeque<Token>) {
     let trimmed_line = line.trim();
     if trimmed_line.is_empty() || trimmed_line.starts_with("#") { return }
 
-    let vec: Vec<char> = line.chars().collect();
+    let chars: Vec<char> = line.chars().collect();
     let mut index = 0;
 
-    while index < vec.len() {
-        let c = vec[index];
+    while index < chars.len() {
+        let c = chars[index];
         // match returns a token, and how much index should increment
         let (token, offset) = match c {
             '='  => (Token::Equal,    1),
             ','  => (Token::Comma,    1),
             '('  => (Token::LeftPar,  1),
             ')'  => (Token::RightPar, 1),
-            '\'' => (scan_string(&vec[index+1..])),
+            '\'' => (scan_string(&chars[index+1..])),
             '_'       |
             'a'...'z' |
-            'A'...'Z' => scan_name(&vec[index..]),
-             _   => { index += 1; continue; }
+            'A'...'Z' => scan_name(&chars[index..]),
+             _   => { index += 1; continue }
         };
         tokens.push_back(token);
         index += offset;
@@ -68,23 +68,24 @@ fn scan_line_tokens(line: String, tokens: &mut VecDeque<Token>) {
 }
 
 fn scan_name(chars: &[char]) -> (Token, usize) {
-    let mut count = 0;
+    let mut offset = 0;
     let mut name = String::new();
     for c in chars.iter() {
-        if !(c.is_alphanumeric() || *c == '_') { break; }
+        if !(c.is_alphanumeric() || *c == '_') { break }
         name.push(*c);
-        count += 1;
+        offset += 1;
     }
-    return (Token::Name(name), count);
+    (Token::Name(name), offset)
 }
 
 fn scan_string(chars: &[char]) -> (Token, usize) {
-    let mut count = 1;
+    let mut offset = 1;
     let mut string = String::new();
     for c in chars.iter() {
-        count += 1;
-        if *c == '\'' { break; }
+        offset += 1;
+        if *c == '\'' { break }
         string.push(*c);
     }
-    return (Token::StringLiteral(string), count);
+    (Token::StringLiteral(string), offset)
 }
+
