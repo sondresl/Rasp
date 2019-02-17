@@ -5,9 +5,10 @@ use super::token::Token;
 use std::result::Result::Ok;
 use std::prelude::v1::Vec;
 use crate::scanner::token::Token::EoF;
+use std::collections::VecDeque;
 
 pub struct Scanner {
-    token_buffer: Vec<Token>,
+    token_buffer: VecDeque<Token>,
     reader: BufReader<File>
 }
 
@@ -15,7 +16,7 @@ impl Scanner {
 
     pub fn new(filename: &str) -> io::Result<Scanner> {
         Ok(Scanner {
-            token_buffer: Vec::new(),
+            token_buffer: VecDeque::new(),
             reader: BufReader::new(File::open(filename)?)
         })
     }
@@ -25,30 +26,23 @@ impl Scanner {
             self.scan_line()
         }
 
-        return self.token_buffer.remove(0);
+        return self.token_buffer.pop_front().unwrap();
     }
 
     fn scan_line(&mut self) {
         let mut line = String::new();
         match self.reader.read_line(&mut line) {
-            Err(_) => panic!("Error encountered during scan_line"),
-            Ok(0)  => self.token_buffer.push(EoF),
-            Ok(_)  => {
-                let tokens = scan_line_tokens(line);
-                for token in tokens {
-                    self.token_buffer.push(token);
-                }
-            }
+            Err(e) => panic!(format!("Error encountered during scan_line:\n{:?}", e)),
+            Ok(0)  => self.token_buffer.push_back(EoF),
+            Ok(_)  => scan_line_tokens(line, &mut self.token_buffer)
         }
     }
 }
 
-fn scan_line_tokens(line: String) -> Vec<Token> {
-
-    let mut tokens: Vec<Token> = vec![];
+fn scan_line_tokens(line: String, tokens: &mut VecDeque<Token>) {
 
     let trimmed_line = line.trim();
-    if trimmed_line.is_empty() || trimmed_line.starts_with("#") { return tokens }
+    if trimmed_line.is_empty() || trimmed_line.starts_with("#") { return }
 
     let vec: Vec<char> = line.chars().collect();
     let mut index = 0;
@@ -67,11 +61,10 @@ fn scan_line_tokens(line: String) -> Vec<Token> {
             'A'...'Z' => scan_name(&vec[index..]),
              _   => { index += 1; continue; }
         };
-        tokens.push(token);
+        tokens.push_back(token);
         index += offset;
     }
-    tokens.push(Token::Newline);
-    return tokens;
+    tokens.push_back(Token::Newline);
 }
 
 fn scan_name(chars: &[char]) -> (Token, usize) {
