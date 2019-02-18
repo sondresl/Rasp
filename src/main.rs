@@ -1,8 +1,16 @@
 #![feature(range_contains)]
 mod scanner;
-use scanner::scanner::scan;
+use crate::scanner::scanner::Scanner;
+use crate::scanner::token::Token::EoF;
 
 fn main() {
-    scan("asp/mini.asp")
-        .expect("Failed to scan mini.asp");
+
+    let mut sc = Scanner::new("asp/mini.asp")
+        .expect("Unable to open scanner for asp.mini");
+
+    loop {
+        let t = sc.next_token();
+        println!("{:?}", t);
+        if t == EoF { break }
+    }
 }
