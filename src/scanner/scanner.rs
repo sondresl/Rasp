@@ -20,22 +20,43 @@ impl Scanner {
         })
     }
 
-    pub fn next_token(&mut self) -> Token {
-        while self.token_buffer.is_empty() {
-            self.scan_line()
-        }
+    pub fn cur_token(&mut self) -> &Token {
+        self.fill_token_buffer();
+        self.token_buffer.front().unwrap()
+    }
 
+
+    pub fn next_token(&mut self) -> Token {
+        self.fill_token_buffer();
         return self.token_buffer.pop_front().unwrap();
+    }
+
+    pub fn skip(&mut self, token: Token) {
+        let t = self.next_token();
+        if t != token {
+            panic!(format!("Expected {:?}, but found {:?}", token, t))
+        }
+    }
+
+    pub fn has_equal_token(&self) -> bool {
+        self.token_buffer.contains(&Token::Equal)
     }
 
     fn scan_line(&mut self) {
         let mut line = String::new();
         match self.reader.read_line(&mut line) {
             Err(e) => panic!(format!("Error encountered during scan_line:\n{:?}", e)),
-            Ok(0) => self.token_buffer.push_back(EoF),
-            Ok(_) => scan_line_tokens(line, &mut self.token_buffer),
+            Ok(0)  => self.token_buffer.push_back(EoF),
+            Ok(_)  => scan_line_tokens(line, &mut self.token_buffer),
         }
     }
+
+    fn fill_token_buffer(&mut self) {
+        while self.token_buffer.is_empty() {
+            self.scan_line()
+        }
+    }
+
 }
 
 /// Scan one line of input and create tokens.
@@ -52,16 +73,15 @@ fn scan_line_tokens(line: String, tokens: &mut VecDeque<Token>) {
         let c = chars[index];
         // match returns a token, and how much index should increment
         let (token, offset) = match c {
-            '=' => (Token::Equal, 1),
-            ',' => (Token::Comma, 1),
-            '(' => (Token::LeftPar, 1),
-            ')' => (Token::RightPar, 1),
-            '\'' => (scan_string(&chars[index + 1..])),
-            '_' | 'a'...'z' | 'A'...'Z' => scan_name(&chars[index..]),
-            _ => {
-                index += 1;
-                continue;
-            }
+            '='       => (Token::Equal,     1),
+            ','       => (Token::Comma,     1),
+            '('       => (Token::LeftPar,   1),
+            ')'       => (Token::RightPar,  1),
+            '\''      => (scan_string(&chars[index + 1..])),
+            '_'       |
+            'a'...'z' |
+            'A'...'Z' => scan_name(&chars[index..]),
+             _        => { index += 1; continue; }
         };
         tokens.push_back(token);
         index += offset;
