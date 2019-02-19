@@ -4,7 +4,8 @@ mod parser;
 
 use crate::scanner::scanner::Scanner;
 use crate::scanner::token::Token::EoF;
-use crate::parser::parser::AspProgram;
+use crate::parser::asp_program::AspProgram;
+use crate::parser::asp_syntax::AspSyntax;
 
 fn main() {
     test_parser()
