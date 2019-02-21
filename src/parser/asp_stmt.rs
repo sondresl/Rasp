@@ -3,7 +3,8 @@ use crate::parser::asp_stmt::AspStmt::Assignment;
 use crate::parser::asp_stmt::AspStmt::ExprStmt;
 use crate::parser::asp_assignment::AspAssignment;
 use crate::parser::asp_expr::AspExpr;
-use crate::parser::asp_syntax::AspSyntax;
+use crate::parser::error::ParseError;
+
 
 #[derive(Debug)]
 pub enum AspStmt {
@@ -11,11 +12,11 @@ pub enum AspStmt {
     ExprStmt(AspExpr)
 }
 
-impl AspSyntax for AspStmt {
-    fn parse(sc: &mut Scanner) -> AspStmt {
+impl AspStmt {
+    pub fn parse(sc: &mut Scanner) -> Result<AspStmt,ParseError> {
         if sc.has_equal_token() {
-            return Assignment(AspAssignment::parse(sc));
+            return Ok(Assignment(AspAssignment::parse(sc)?));
         }
-        return ExprStmt(AspExpr::parse(sc));
+        Ok(ExprStmt(AspExpr::parse(sc)?))
     }
 }

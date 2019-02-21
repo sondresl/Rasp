@@ -5,3 +5,5 @@ authors = ["sondrelunde <sondreslunde@gmail.com>", "gauteberge <gaute.berge@gmai
 edition = "2018"
 
 [dependencies]
+derive-new = "0.5.6"
+colored = "1.7"

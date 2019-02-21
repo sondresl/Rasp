@@ -6,13 +6,13 @@ pub mod asp_name;
 pub mod asp_program;
 pub mod asp_stmt;
 pub mod asp_string;
-pub mod asp_syntax;
+pub mod error;
 
 #[cfg(test)]
 mod parser_tests {
     use crate::scanner::scanner::Scanner;
     use crate::parser::asp_program::AspProgram;
-    use crate::parser::asp_syntax::AspSyntax;
+
     use std::io::BufReader;
     use std::collections::VecDeque;
 

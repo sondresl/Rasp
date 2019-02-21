@@ -6,10 +6,12 @@ use std::io;
 use std::io::{BufRead, BufReader};
 use std::prelude::v1::Vec;
 use std::result::Result::Ok;
+use crate::parser::error::ParseError;
 
 pub struct Scanner {
     token_buffer: VecDeque<Token>,
     reader: BufReader<File>,
+    cur_line: u32
 }
 
 impl Scanner {
@@ -17,7 +19,12 @@ impl Scanner {
         Ok(Scanner {
             token_buffer: VecDeque::new(),
             reader: BufReader::new(File::open(filename)?),
+            cur_line: 0
         })
+    }
+
+    pub fn cur_line(&self) -> u32 {
+        self.cur_line
     }
 
     pub fn cur_token(&mut self) -> &Token {
@@ -31,11 +38,10 @@ impl Scanner {
         return self.token_buffer.pop_front().unwrap();
     }
 
-    pub fn skip(&mut self, token: Token) {
+    pub fn skip(&mut self, token: Token) -> Result<(),ParseError> {
         let t = self.next_token();
-        if t != token {
-            panic!(format!("Expected {:?}, but found {:?}", token, t))
-        }
+        if t == token { return Ok(()) }
+        return Err(ParseError::new(token, t, self.cur_line))
     }
 
     pub fn has_equal_token(&self) -> bool {
@@ -43,6 +49,7 @@ impl Scanner {
     }
 
     fn scan_line(&mut self) {
+        self.cur_line += 1;
         let mut line = String::new();
         match self.reader.read_line(&mut line) {
             Err(e) => panic!(format!("Error encountered during scan_line:\n{:?}", e)),
