@@ -2,3 +2,5 @@
 **/*.rs.bk
 .idea/
 Cargo.lock
+tags
+.DS_Store
