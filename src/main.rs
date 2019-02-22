@@ -6,6 +6,7 @@ extern crate colored;
 
 mod scanner;
 mod parser;
+mod runtime;
 
 use crate::scanner::scanner::Scanner;
 use crate::parser::asp_program::AspProgram;
@@ -20,6 +21,6 @@ fn main() {
         println!("{}", p);
         exit(1);
     });
+    // eval program
     println!("{:?}", program);
 }
-

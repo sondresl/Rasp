@@ -3,6 +3,7 @@ use crate::scanner::token::Token::EoF;
 use crate::parser::asp_stmt::AspStmt;
 use crate::parser::error::ParseError;
 
+use std::fmt;
 
 #[derive(Debug)]
 pub struct AspProgram {
@@ -16,5 +17,11 @@ impl AspProgram {
             program.stmts.push(AspStmt::parse(sc)?);
         }
         Ok(program)
+    }
+}
+
+impl fmt::Display for AspProgram {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.pad("AspProgram")
     }
 }
