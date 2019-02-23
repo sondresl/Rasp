@@ -1,0 +1,17 @@
+AspProgram
+<AspStmt enum>
+<AspAssignment>
+<AspName><AspExpr>
+<AspAssignment>
+  <AspString>
+<\AspAssignment\>
+<\AspExpr\>
+<\AspAssignment\>
+<\AspStmt enum\>
+<AspStmt enum>
+<AspExpr>
+<AspAssignment>
+  <AspName>
+<\AspAssignment\>
+<\AspExpr\>
+<\AspStmt enum\>

@@ -21,6 +21,10 @@ fn main() {
         println!("{}", p);
         exit(1);
     });
-    // eval program
-    println!("{:?}", program);
+    // program.eval();
+    program.test_parser();
+    // println!("{:?}", program);
 }
+
+// test_parser is the equivalent of the -testparser flag from INF2100.
+// It creates the AST, and then calls pretty print on the tree.

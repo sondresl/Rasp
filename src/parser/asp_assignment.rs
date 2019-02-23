@@ -4,6 +4,8 @@ use crate::parser::asp_name::AspName;
 use crate::parser::asp_expr::AspExpr;
 use crate::parser::error::ParseError;
 
+use std::fs::File;
+use std::io::prelude::*;
 
 #[derive(Debug)]
 pub struct AspAssignment {
@@ -24,5 +26,15 @@ impl AspAssignment {
             // TODO: Generalize parse error. Dont hard code Token::Name
             token => Err(ParseError::new(token, Token::Name(String::new()), sc.cur_line()))
         }
+    }
+
+    pub fn test_parser(&self, file: &mut File, indentation: u32) -> std::io::Result<()> {
+        file.write_all(b"<AspAssignment>\n");
+
+        self.name.test_parser(file, indentation + 1);
+        self.expr.test_parser(file, indentation + 1);
+
+        file.write_all(b"<\\AspAssignment\\>\n");
+        Ok(())
     }
 }
