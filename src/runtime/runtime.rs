@@ -6,6 +6,7 @@ pub enum RuntimeValue {
     RuntimeFloat,
     RuntimeBoolean,
     RuntimeString,
+    RuntimeNone,
 }
 
 struct Scope {
