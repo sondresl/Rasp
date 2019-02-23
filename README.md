@@ -5,5 +5,5 @@ of Python.
 
 ### Authors:
 
-[Sondre Lunde](www.github.com/sondresl)
+[Sondre Lunde](www.github.com/sondresl)  
 [Gaute Berge](www.github.com/gauteab)
