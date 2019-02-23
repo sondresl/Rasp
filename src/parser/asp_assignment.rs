@@ -29,12 +29,14 @@ impl AspAssignment {
     }
 
     pub fn test_parser(&self, file: &mut File, indentation: u32) -> std::io::Result<()> {
-        file.write_all(b"<AspAssignment>\n");
+        for _ in 0..=(indentation * 2) { file.write(b" ")?; };
+        file.write(b"<AspAssignment>\n")?;
 
-        self.name.test_parser(file, indentation + 1);
-        self.expr.test_parser(file, indentation + 1);
+        self.name.test_parser(file, indentation + 1)?;
+        self.expr.test_parser(file, indentation + 1)?;
 
-        file.write_all(b"<\\AspAssignment\\>\n");
+        for _ in 0..=(indentation * 2) { file.write(b" ")?; };
+        file.write(b"<AspAssignment/>\n")?;
         Ok(())
     }
 }

@@ -35,10 +35,12 @@ impl AspProgram {
     /// the stack.
     pub fn test_parser(&self) -> std::io::Result<()> {
         let mut file = File::create("log/mini.log")?;
-        file.write_all(b"AspProgram\n")?;
+        file.write(b"<AspProgram>\n")?;
         for s in &self.stmts {
             s.test_parser(&mut file, 1)?;
         }
+
+        file.write(b"<AspProgram/>\n")?;
         Ok(())
     }
 }

@@ -1,17 +1,22 @@
-AspProgram
-<AspStmt enum>
-<AspAssignment>
-<AspName><AspExpr>
-<AspAssignment>
-  <AspString>
-<\AspAssignment\>
-<\AspExpr\>
-<\AspAssignment\>
-<\AspStmt enum\>
-<AspStmt enum>
-<AspExpr>
-<AspAssignment>
-  <AspName>
-<\AspAssignment\>
-<\AspExpr\>
-<\AspStmt enum\>
+<AspProgram>
+  <AspStmt enum>
+     <AspAssignment>
+       <AspName>
+       <AspName/>
+       <AspExpr>
+         <AspAtom>
+           <AspString>
+           <AspString/>
+         <AspAtom/>
+       <AspExpr/>
+     <AspAssignment/>
+  <AspStmt enum/>
+  <AspStmt enum>
+     <AspExpr>
+       <AspAtom>
+         <AspName>
+         <AspName/>
+       <AspAtom/>
+     <AspExpr/>
+  <AspStmt enum/>
+<AspProgram/>

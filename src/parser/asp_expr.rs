@@ -24,9 +24,13 @@ impl AspExpr {
     }
 
     pub fn test_parser(&self, file: &mut File, indentation: u32) -> std::io::Result<()> {
-        file.write_all(b"<AspExpr>\n");
-        self.atom.test_parser(file, indentation + 1);
-        file.write_all(b"<\\AspExpr\\>\n");
+        for _ in 0..=(indentation * 2) { file.write(b" ")?; };
+        file.write(b"<AspExpr>\n")?;
+
+        self.atom.test_parser(file, indentation + 1)?;
+
+        for _ in 0..=(indentation * 2) { file.write(b" ")?; };
+        file.write(b"<AspExpr/>\n")?;
         Ok(())
     }
 }

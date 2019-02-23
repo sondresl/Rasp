@@ -22,7 +22,7 @@ fn main() {
         exit(1);
     });
     // program.eval();
-    program.test_parser();
+    program.test_parser().expect("Error during test_parser");
     // println!("{:?}", program);
 }
 

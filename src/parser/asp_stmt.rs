@@ -28,15 +28,19 @@ impl AspStmt {
     // }
 
     pub fn test_parser(&self, file: &mut File, indentation: u32) -> std::io::Result<()> {
-        file.write_all(b"<AspStmt enum>\n");
+        for _ in 0..(indentation * 2) { file.write(b" ")?; }
+        file.write(b"<AspStmt enum>\n")?;
+
         match self {
             // TODO
             // Possible to match multiple enums to do the same
-            // thing? _(v) => v.pretty_print() ????
+            // thing? _(v) => v.test_parser() ????
             Assignment(v) => v.test_parser(file, indentation + 1)?,
             ExprStmt(v)   => v.test_parser(file, indentation + 1)?,
         }
-        file.write_all(b"<\\AspStmt enum\\>\n");
+
+        for _ in 0..(indentation * 2) { file.write(b" ")?; }
+        file.write(b"<AspStmt enum/>\n")?;
         Ok(())
     }
 }

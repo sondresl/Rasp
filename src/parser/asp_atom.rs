@@ -25,13 +25,17 @@ impl AspAtom {
     }
 
     pub fn test_parser(&self, file: &mut File, indentation: u32) -> std::io::Result<()> {
-        file.write_all(b"<AspAssignment>\n");
+        for _ in 0..=(indentation * 2) { file.write(b" ")?; };
+        file.write(b"<AspAtom>\n")?;
+
         match self {
-            // ???
-            AspAtom::Name(v)   => file.write_all(b"  <AspName>\n"),
-            AspAtom::StringLit(v) => file.write_all(b"  <AspString>\n"),
+            // ??? Why do I need enum name here but not elsewhere?
+            AspAtom::Name(v)      => v.test_parser(file, indentation + 1)?,
+            AspAtom::StringLit(v) => v.test_parser(file, indentation + 1)?,
         };
-        file.write_all(b"<\\AspAssignment\\>\n");
+
+        for _ in 0..=(indentation * 2) { file.write(b" ")?; };
+        file.write(b"<AspAtom/>\n")?;
         Ok(())
     }
 }

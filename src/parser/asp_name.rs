@@ -6,7 +6,11 @@ pub struct AspName(pub String);
 
 impl AspName {
     pub fn test_parser(&self, file: &mut File, indentation: u32) -> std::io::Result<()> {
-        file.write_all(b"<AspName>");
+        for _ in 0..=(indentation * 2) { file.write(b" ")?; }
+        file.write(b"<AspName>\n")?;
+
+        for _ in 0..=(indentation * 2) { file.write(b" ")?; }
+        file.write(b"<AspName/>\n")?;
         Ok(())
     }
 }
