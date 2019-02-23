@@ -4,8 +4,9 @@ use crate::parser::asp_stmt::AspStmt;
 use crate::parser::error::ParseError;
 use crate::runtime::runtime::RuntimeValue;
 use crate::runtime::runtime::Scope;
-use std::fmt;
 use crate::log::logger::Logger;
+use std::fmt;
+use std::io;
 
 #[derive(Debug)]
 pub struct AspProgram {
@@ -38,12 +39,12 @@ impl AspProgram {
     /// Since this is the method called, it takes no arguments beyond
     /// self, and then sends the writer (and indentation level) down
     /// the stack.
-    pub fn test_parser(&self, logger: &mut Logger) -> std::io::Result<()> {
+    pub fn test_parser(&self, logger: &mut Logger) -> io::Result<()> {
         logger.enter_parser("AspProgram")?;
         for s in &self.stmts {
             s.test_parser(logger)?;
         }
-        logger.leave_parse("AspProgram")
+        logger.leave_parser("AspProgram")
     }
 }
 

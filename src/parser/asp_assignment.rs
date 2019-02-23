@@ -6,6 +6,7 @@ use crate::parser::error::ParseError;
 use crate::runtime::runtime::RuntimeValue;
 use crate::runtime::runtime::Scope;
 use crate::log::logger::Logger;
+use std::io;
 
 #[derive(Debug)]
 pub struct AspAssignment {
@@ -36,12 +37,12 @@ impl AspAssignment {
         RuntimeValue::RuntimeNone
     }
 
-    pub fn test_parser(&self, logger: &mut Logger) -> std::io::Result<()> {
+    pub fn test_parser(&self, logger: &mut Logger) -> io::Result<()> {
         logger.enter_parser("AspAssignment")?;
 
         self.name.test_parser(logger)?;
         self.expr.test_parser(logger)?;
 
-        logger.leave_parse("AspAssignment")
+        logger.leave_parser("AspAssignment")
     }
 }

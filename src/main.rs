@@ -12,6 +12,7 @@ mod log;
 
 use crate::scanner::scanner::Scanner;
 use crate::parser::asp_program::AspProgram;
+use crate::log::logger::Logger;
 use std::process::exit;
 use colored::Colorize;
 
@@ -25,7 +26,7 @@ fn main() {
     });
     // program.eval();
     println!("Writing to log file...");
-    let mut logger = log::logger::Logger::new("log/mini.log").unwrap();
+    let mut logger = Logger::new("log/mini.log").unwrap();
     program.test_parser(&mut logger).expect("Error during test_parser");
     println!("Done");
 }

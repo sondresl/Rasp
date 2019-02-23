@@ -6,6 +6,7 @@ use crate::parser::error::ParseError;
 use crate::runtime::runtime::RuntimeValue;
 use crate::runtime::runtime::Scope;
 use crate::log::logger::Logger;
+use std::io;
 
 #[derive(Debug)]
 pub struct AspExpr {
@@ -29,9 +30,9 @@ impl AspExpr {
         rv
     }
 
-    pub fn test_parser(&self, logger: &mut Logger) -> std::io::Result<()> {
+    pub fn test_parser(&self, logger: &mut Logger) -> io::Result<()> {
         logger.enter_parser("AspExpr")?;
         self.atom.test_parser(logger)?;
-        logger.leave_parse("AspExpr")
+        logger.leave_parser("AspExpr")
     }
 }

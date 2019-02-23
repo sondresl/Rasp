@@ -4,6 +4,7 @@ use crate::parser::asp_name::AspName;
 use crate::parser::asp_string::AspString;
 use crate::parser::error::ParseError;
 use crate::log::logger::Logger;
+use std::io;
 
 #[derive(Debug)]
 pub enum AspAtom {
@@ -22,7 +23,7 @@ impl AspAtom {
         }
     }
 
-    pub fn test_parser(&self, logger: &mut Logger) -> std::io::Result<()> {
+    pub fn test_parser(&self, logger: &mut Logger) -> io::Result<()> {
         logger.enter_parser("AspAtom")?;
         match self {
             // ??? Why do I need enum name here but not elsewhere?
@@ -30,6 +31,6 @@ impl AspAtom {
             AspAtom::StringLit(v) => v.test_parser(logger)?,
         };
 
-        logger.leave_parse("AspAtom")
+        logger.leave_parser("AspAtom")
     }
 }

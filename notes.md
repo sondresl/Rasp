@@ -11,3 +11,9 @@ I find this to be an ugly solution. Is there maybe a better way to pad the outpu
 for _ in 0..=(indentation * 2) { file.write(b" ")?; };
 ```
 
+### Project structure
+I want to look into different wys of structuring the project. It might be good to just stick to the way it wasin 2100,
+but there might be a more idiomatic way of doing this in rust. Mainly im thinking about separing implementation blocks
+into different modules. For example, the logger module would provide the impl for each ast element with the logging
+functions.
+

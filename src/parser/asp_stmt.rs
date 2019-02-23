@@ -7,6 +7,7 @@ use crate::parser::error::ParseError;
 use crate::runtime::runtime::Scope;
 use crate::runtime::runtime::RuntimeValue;
 use crate::log::logger::Logger;
+use std::io;
 
 
 #[derive(Debug)]
@@ -32,7 +33,7 @@ impl AspStmt {
         rv
     }
 
-    pub fn test_parser(&self, logger: &mut Logger) -> std::io::Result<()> {
+    pub fn test_parser(&self, logger: &mut Logger) -> io::Result<()> {
         logger.enter_parser("AspStmt enum")?;
         match self {
             // TODO
@@ -41,6 +42,6 @@ impl AspStmt {
             Assignment(v) => v.test_parser(logger)?,
             ExprStmt(v)   => v.test_parser(logger)?,
         }
-        logger.leave_parse("AspStmt enum")
+        logger.leave_parser("AspStmt enum")
     }
 }

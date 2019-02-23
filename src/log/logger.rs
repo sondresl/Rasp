@@ -24,7 +24,7 @@ impl Logger {
         Ok(())
     }
 
-    pub fn leave_parse(&mut self, name: &str) -> io::Result<()> {
+    pub fn leave_parser(&mut self, name: &str) -> io::Result<()> {
         self.indent -= 1;
         for _ in 0..(self.indent * 2) { self.file.write(b" ")?; }
         self.file.write_fmt(format_args!("</{}>\n",name))?;
