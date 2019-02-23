@@ -3,6 +3,8 @@ use crate::scanner::token::Token;
 use crate::parser::asp_name::AspName;
 use crate::parser::asp_expr::AspExpr;
 use crate::parser::error::ParseError;
+use crate::runtime::runtime::RuntimeValue;
+use crate::runtime::runtime::Scope;
 
 use std::fs::File;
 use std::io::prelude::*;
@@ -26,6 +28,14 @@ impl AspAssignment {
             // TODO: Generalize parse error. Dont hard code Token::Name
             token => Err(ParseError::new(token, Token::Name(String::new()), sc.cur_line()))
         }
+    }
+
+    pub fn eval(&self, cur_scope: &mut Scope) -> RuntimeValue {
+        // TODO
+        // Need to make the scopes that something other than String, or
+        // get a string from AspName. 
+        // cur_scope.insert(self.name.name, self.expr.eval(&mut cur_scope));
+        RuntimeValue::RuntimeNone
     }
 
     pub fn test_parser(&self, file: &mut File, indentation: u32) -> std::io::Result<()> {

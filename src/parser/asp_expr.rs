@@ -3,6 +3,8 @@ use crate::scanner::scanner::Scanner;
 use crate::scanner::token::Token;
 use crate::parser::asp_arguments::AspArguments;
 use crate::parser::error::ParseError;
+use crate::runtime::runtime::RuntimeValue;
+use crate::runtime::runtime::Scope;
 
 use std::fs::File;
 use std::io::prelude::*;
@@ -21,6 +23,12 @@ impl AspExpr {
             _ => None
         };
         Ok(AspExpr{atom,suffix})
+    }
+
+    pub fn eval(&self, cur_scope: &mut Scope) -> RuntimeValue {
+        let rv = RuntimeValue::RuntimeNone;
+
+        rv
     }
 
     pub fn test_parser(&self, file: &mut File, indentation: u32) -> std::io::Result<()> {

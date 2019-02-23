@@ -4,6 +4,9 @@ use crate::parser::asp_stmt::AspStmt::ExprStmt;
 use crate::parser::asp_assignment::AspAssignment;
 use crate::parser::asp_expr::AspExpr;
 use crate::parser::error::ParseError;
+use crate::runtime::runtime::Scope;
+use crate::runtime::runtime::RuntimeValue;
+
 
 use std::fs::File;
 use std::io::prelude::*;
@@ -23,9 +26,14 @@ impl AspStmt {
         Ok(ExprStmt(AspExpr::parse(sc)?))
     }
 
-    // pub fn eval(&self) -> RuntimeValue {
-
-    // }
+    /// See asp_program.rs for early doc of eval.
+    pub fn eval(&self, cur_scope: &mut Scope) -> RuntimeValue {
+        let rv = match self {
+            Assignment(v) => v.eval(&mut cur_scope),
+            ExprStmt(v)   => v.eval(&mut cur_scope),
+        };
+        rv
+    }
 
     pub fn test_parser(&self, file: &mut File, indentation: u32) -> std::io::Result<()> {
         for _ in 0..(indentation * 2) { file.write(b" ")?; }

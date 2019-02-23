@@ -9,21 +9,21 @@ pub enum RuntimeValue {
     RuntimeNone,
 }
 
-struct Scope {
+pub struct Scope {
     parent: Option<Box<Scope>>,
     map: HashMap<String, RuntimeValue>,
 }
 
 
 impl Scope {
-    fn new(sc: Option<Box<Scope>>) -> Scope {
+    pub fn new(sc: Option<Box<Scope>>) -> Scope {
         Scope {
             parent: sc,
             map: HashMap::new(),
         }
     }
 
-    fn find(&self, key: String) -> Option<&RuntimeValue> {
+    pub fn find(&self, key: String) -> Option<&RuntimeValue> {
         self.map.get(&key).or_else(|| 
             if let Some(m) = &self.parent {
                 m.find(key)
@@ -32,7 +32,7 @@ impl Scope {
             })
     }
 
-    fn insert(&mut self, key: String, val: RuntimeValue) {
+    pub fn insert(&mut self, key: String, val: RuntimeValue) {
         self.map.insert(key, val);
     }
 }

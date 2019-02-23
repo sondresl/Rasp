@@ -2,7 +2,8 @@ use crate::scanner::scanner::Scanner;
 use crate::scanner::token::Token::EoF;
 use crate::parser::asp_stmt::AspStmt;
 use crate::parser::error::ParseError;
-// use crate::runtime::runtime::RuntimeValue;
+use crate::runtime::runtime::RuntimeValue;
+use crate::runtime::runtime::Scope;
 
 use std::fs::File;
 use std::io::prelude::*;
@@ -23,12 +24,19 @@ impl AspProgram {
         Ok(program)
     }
 
-    // pub fn eval(&self) -> RuntimeValue {
-    //     for v in &self.stmts {
-    //         // v.eval();
-    //     }
-    //     RuntimeValue::RuntimeInteger
-    // }
+    /// As the highest level in the ast, eval is first called on this instance,
+    /// which calls it on all the elements in the stmts vec. 
+    ///
+    /// This function should have a global scope, with builtin functions.
+    ///
+    pub fn eval(&self) -> RuntimeValue {
+        let mut sc = Scope::new(None);
+        let rv = RuntimeValue::RuntimeNone;
+        for v in &self.stmts {
+            v.eval(&mut sc);
+        }
+        rv
+    }
 
     /// Since this is the method called, it takes no arguments beyond
     /// self, and then sends the writer (and indentation level) down
