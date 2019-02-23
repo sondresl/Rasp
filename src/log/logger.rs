@@ -4,7 +4,7 @@ use std::io;
 
 pub struct Logger {
     file: File,
-    indent: u32
+    indent: usize
 }
 
 impl Logger {
@@ -17,18 +17,14 @@ impl Logger {
     }
 
     pub fn enter_parser(&mut self, name: &str) -> io::Result<()> {
-        for _ in 0..(self.indent * 2) { self.file.write(b" ")?; }
-        self.file.write_fmt(format_args!("<{}>\n",name))?;
+        self.file.write_fmt(format_args!("{}<{}>\n", str::repeat(" ", self.indent * 2), name))?;
         self.indent += 1;
-
         Ok(())
     }
 
     pub fn leave_parser(&mut self, name: &str) -> io::Result<()> {
         self.indent -= 1;
-        for _ in 0..(self.indent * 2) { self.file.write(b" ")?; }
-        self.file.write_fmt(format_args!("</{}>\n",name))?;
-
+        self.file.write_fmt(format_args!("{}</{}>\n", str::repeat(" ", self.indent * 2), name))?;
         Ok(())
     }
 }
