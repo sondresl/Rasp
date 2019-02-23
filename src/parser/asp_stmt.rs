@@ -6,10 +6,7 @@ use crate::parser::asp_expr::AspExpr;
 use crate::parser::error::ParseError;
 use crate::runtime::runtime::Scope;
 use crate::runtime::runtime::RuntimeValue;
-
-
-use std::fs::File;
-use std::io::prelude::*;
+use crate::log::logger::Logger;
 
 
 #[derive(Debug)]
@@ -27,7 +24,7 @@ impl AspStmt {
     }
 
     /// See asp_program.rs for early doc of eval.
-    pub fn eval(&self, cur_scope: &mut Scope) -> RuntimeValue {
+    pub fn eval(&self, mut cur_scope: &mut Scope) -> RuntimeValue {
         let rv = match self {
             Assignment(v) => v.eval(&mut cur_scope),
             ExprStmt(v)   => v.eval(&mut cur_scope),
@@ -35,20 +32,15 @@ impl AspStmt {
         rv
     }
 
-    pub fn test_parser(&self, file: &mut File, indentation: u32) -> std::io::Result<()> {
-        for _ in 0..(indentation * 2) { file.write(b" ")?; }
-        file.write(b"<AspStmt enum>\n")?;
-
+    pub fn test_parser(&self, logger: &mut Logger) -> std::io::Result<()> {
+        logger.enter_parser("AspStmt enum")?;
         match self {
             // TODO
             // Possible to match multiple enums to do the same
             // thing? _(v) => v.test_parser() ????
-            Assignment(v) => v.test_parser(file, indentation + 1)?,
-            ExprStmt(v)   => v.test_parser(file, indentation + 1)?,
+            Assignment(v) => v.test_parser(logger)?,
+            ExprStmt(v)   => v.test_parser(logger)?,
         }
-
-        for _ in 0..(indentation * 2) { file.write(b" ")?; }
-        file.write(b"<AspStmt enum/>\n")?;
-        Ok(())
+        logger.leave_parse("AspStmt enum")
     }
 }

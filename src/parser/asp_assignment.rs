@@ -5,9 +5,7 @@ use crate::parser::asp_expr::AspExpr;
 use crate::parser::error::ParseError;
 use crate::runtime::runtime::RuntimeValue;
 use crate::runtime::runtime::Scope;
-
-use std::fs::File;
-use std::io::prelude::*;
+use crate::log::logger::Logger;
 
 #[derive(Debug)]
 pub struct AspAssignment {
@@ -38,15 +36,12 @@ impl AspAssignment {
         RuntimeValue::RuntimeNone
     }
 
-    pub fn test_parser(&self, file: &mut File, indentation: u32) -> std::io::Result<()> {
-        for _ in 0..=(indentation * 2) { file.write(b" ")?; };
-        file.write(b"<AspAssignment>\n")?;
+    pub fn test_parser(&self, logger: &mut Logger) -> std::io::Result<()> {
+        logger.enter_parser("AspAssignment")?;
 
-        self.name.test_parser(file, indentation + 1)?;
-        self.expr.test_parser(file, indentation + 1)?;
+        self.name.test_parser(logger)?;
+        self.expr.test_parser(logger)?;
 
-        for _ in 0..=(indentation * 2) { file.write(b" ")?; };
-        file.write(b"<AspAssignment/>\n")?;
-        Ok(())
+        logger.leave_parse("AspAssignment")
     }
 }

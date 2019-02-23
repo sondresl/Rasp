@@ -5,9 +5,7 @@ use crate::parser::asp_arguments::AspArguments;
 use crate::parser::error::ParseError;
 use crate::runtime::runtime::RuntimeValue;
 use crate::runtime::runtime::Scope;
-
-use std::fs::File;
-use std::io::prelude::*;
+use crate::log::logger::Logger;
 
 #[derive(Debug)]
 pub struct AspExpr {
@@ -31,14 +29,9 @@ impl AspExpr {
         rv
     }
 
-    pub fn test_parser(&self, file: &mut File, indentation: u32) -> std::io::Result<()> {
-        for _ in 0..=(indentation * 2) { file.write(b" ")?; };
-        file.write(b"<AspExpr>\n")?;
-
-        self.atom.test_parser(file, indentation + 1)?;
-
-        for _ in 0..=(indentation * 2) { file.write(b" ")?; };
-        file.write(b"<AspExpr/>\n")?;
-        Ok(())
+    pub fn test_parser(&self, logger: &mut Logger) -> std::io::Result<()> {
+        logger.enter_parser("AspExpr")?;
+        self.atom.test_parser(logger)?;
+        logger.leave_parse("AspExpr")
     }
 }

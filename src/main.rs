@@ -1,4 +1,5 @@
 #![feature(range_contains)]
+#![allow(dead_code, unused_variables)]
 
 #[macro_use]
 extern crate derive_new;
@@ -7,6 +8,7 @@ extern crate colored;
 mod scanner;
 mod parser;
 mod runtime;
+mod log;
 
 use crate::scanner::scanner::Scanner;
 use crate::parser::asp_program::AspProgram;
@@ -22,8 +24,10 @@ fn main() {
         exit(1);
     });
     // program.eval();
-    program.test_parser().expect("Error during test_parser");
-    // println!("{:?}", program);
+    println!("Writing to log file...");
+    let mut logger = log::logger::Logger::new("log/mini.log").unwrap();
+    program.test_parser(&mut logger).expect("Error during test_parser");
+    println!("Done");
 }
 
 // test_parser is the equivalent of the -testparser flag from INF2100.

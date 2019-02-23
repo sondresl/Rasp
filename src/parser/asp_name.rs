@@ -1,16 +1,11 @@
-use std::fs::File;
-use std::io::prelude::*;
+use crate::log::logger::Logger;
 
 #[derive(Debug)]
 pub struct AspName(pub String);
 
 impl AspName {
-    pub fn test_parser(&self, file: &mut File, indentation: u32) -> std::io::Result<()> {
-        for _ in 0..=(indentation * 2) { file.write(b" ")?; }
-        file.write(b"<AspName>\n")?;
-
-        for _ in 0..=(indentation * 2) { file.write(b" ")?; }
-        file.write(b"<AspName/>\n")?;
-        Ok(())
+    pub fn test_parser(&self, logger: &mut Logger) -> std::io::Result<()> {
+        logger.enter_parser("AspName")?;
+        logger.leave_parse("AspName")
     }
 }

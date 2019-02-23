@@ -3,9 +3,7 @@ use crate::scanner::token::Token;
 use crate::parser::asp_name::AspName;
 use crate::parser::asp_string::AspString;
 use crate::parser::error::ParseError;
-
-use std::fs::File;
-use std::io::prelude::*;
+use crate::log::logger::Logger;
 
 #[derive(Debug)]
 pub enum AspAtom {
@@ -24,18 +22,14 @@ impl AspAtom {
         }
     }
 
-    pub fn test_parser(&self, file: &mut File, indentation: u32) -> std::io::Result<()> {
-        for _ in 0..=(indentation * 2) { file.write(b" ")?; };
-        file.write(b"<AspAtom>\n")?;
-
+    pub fn test_parser(&self, logger: &mut Logger) -> std::io::Result<()> {
+        logger.enter_parser("AspAtom")?;
         match self {
             // ??? Why do I need enum name here but not elsewhere?
-            AspAtom::Name(v)      => v.test_parser(file, indentation + 1)?,
-            AspAtom::StringLit(v) => v.test_parser(file, indentation + 1)?,
+            AspAtom::Name(v)      => v.test_parser(logger)?,
+            AspAtom::StringLit(v) => v.test_parser(logger)?,
         };
 
-        for _ in 0..=(indentation * 2) { file.write(b" ")?; };
-        file.write(b"<AspAtom/>\n")?;
-        Ok(())
+        logger.leave_parse("AspAtom")
     }
 }
