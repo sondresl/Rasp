@@ -19,7 +19,7 @@ pub enum AspStmt {
 impl AspStmt {
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspStmt,ParseError> {
 
-        logger.enter_parser("AspStmt enum");
+        logger.enter_parser("AspStmt enum")?;
 
         let asp_stmt = if sc.has_equal_token() {
             Assignment(AspAssignment::parse(sc, logger)?)
@@ -27,7 +27,7 @@ impl AspStmt {
             ExprStmt(AspExpr::parse(sc, logger)?)
         };
 
-        logger.leave_parser("AspStmt enum");
+        logger.leave_parser("AspStmt enum")?;
 
         Ok(asp_stmt)
     }

@@ -10,9 +10,9 @@ pub struct AspName(String);
 impl AspName {
 
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspName, ParseError> {
-        logger.enter_parser("AspName");
+        logger.enter_parser("AspName")?;
         if let Token::Name(name) = sc.next_token() {
-            logger.leave_parser("AspName");
+            logger.leave_parser("AspName")?;
             return Ok(AspName(name));
         };
         panic!("Attempted to parse AspName, but no Name token was found")

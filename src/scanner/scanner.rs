@@ -41,7 +41,7 @@ impl Scanner {
     pub fn skip(&mut self, token: Token) -> Result<(),ParseError> {
         let t = self.next_token();
         if t == token { return Ok(()) }
-        return Err(ParseError::new(token, t, self.cur_line))
+        return Err(ParseError::Expected{expected:token, found:t, line_number:self.cur_line as usize})
     }
 
     pub fn has_equal_token(&self) -> bool {

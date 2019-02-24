@@ -16,17 +16,20 @@ pub enum AspAtom {
 impl AspAtom {
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspAtom,ParseError> {
 
-        logger.enter_parser("AspAtom");
+        logger.enter_parser("AspAtom")?;
 
         let asp_atom = match sc.cur_token() {
             Token::Name(value) => AspAtom::Name(AspName::parse(sc, logger)?),
             Token::StringLiteral(value) => AspAtom::StringLit(AspString::parse(sc, logger)?),
-            // TODO: Generalize parse error. Dont hard code Token::Name
-//            token => Err(ParseError::new(token, Token::Name(String::new()), sc.cur_line()))
-            token => panic!("")
+            token => return Err(ParseError::ExpectedOneOf {
+                expected: vec![Token::Name(String::new()), Token::StringLiteral(String::new())],
+                found: token.clone(),
+                line_number: sc.cur_line() as usize
+
+            })
         };
 
-        logger.leave_parser("AspAtom");
+        logger.leave_parser("AspAtom")?;
         Ok(asp_atom)
     }
 

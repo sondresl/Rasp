@@ -17,7 +17,7 @@ pub struct AspAssignment {
 impl AspAssignment {
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspAssignment,ParseError> {
 
-        logger.enter_parser("AspAssignment");
+        logger.enter_parser("AspAssignment")?;
 
         let asp_assignment = match sc.cur_token() {
             Token::Name(_) => {
@@ -27,11 +27,14 @@ impl AspAssignment {
                 sc.skip(Token::Newline)?;
                 Ok(AspAssignment {name,expr} )
             },
-            // TODO: Generalize parse error. Remove all panics
-            _ => panic!()
+            token => return Err(ParseError::Expected {
+                expected: Token::Name(String::new()),
+                found: token.clone(),
+                line_number: sc.cur_line() as usize
+            })
         };
 
-        logger.leave_parser("AspAssignment");
+        logger.leave_parser("AspAssignment")?;
         asp_assignment
     }
 

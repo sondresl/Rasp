@@ -16,14 +16,14 @@ pub struct AspProgram {
 impl AspProgram {
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspProgram,ParseError> {
 
-        logger.enter_parser("AspProgram");
+        logger.enter_parser("AspProgram")?;
 
         let mut program = AspProgram{stmts:vec![]};
         while sc.cur_token() != &EoF {
             program.stmts.push(AspStmt::parse(sc, logger)?);
         }
 
-        logger.leave_parser("AspProgram");
+        logger.leave_parser("AspProgram")?;
 
         Ok(program)
     }
