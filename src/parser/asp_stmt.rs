@@ -17,11 +17,19 @@ pub enum AspStmt {
 }
 
 impl AspStmt {
-    pub fn parse(sc: &mut Scanner) -> Result<AspStmt,ParseError> {
-        if sc.has_equal_token() {
-            return Ok(Assignment(AspAssignment::parse(sc)?));
-        }
-        Ok(ExprStmt(AspExpr::parse(sc)?))
+    pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspStmt,ParseError> {
+
+        logger.enter_parser("AspStmt enum");
+
+        let asp_stmt = if sc.has_equal_token() {
+            Assignment(AspAssignment::parse(sc, logger)?)
+        } else {
+            ExprStmt(AspExpr::parse(sc, logger)?)
+        };
+
+        logger.leave_parser("AspStmt enum");
+
+        Ok(asp_stmt)
     }
 
     /// See asp_program.rs for early doc of eval.

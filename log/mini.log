@@ -17,6 +17,20 @@
         <AspName>
         </AspName>
       </AspAtom>
+      <AspArguments>
+        <AspExpr>
+          <AspAtom>
+            <AspString>
+            </AspString>
+          </AspAtom>
+        </AspExpr>
+        <AspExpr>
+          <AspAtom>
+            <AspName>
+            </AspName>
+          </AspAtom>
+        </AspExpr>
+      </AspArguments>
     </AspExpr>
   </AspStmt enum>
 </AspProgram>

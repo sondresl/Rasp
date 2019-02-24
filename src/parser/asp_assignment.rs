@@ -15,18 +15,24 @@ pub struct AspAssignment {
 }
 
 impl AspAssignment {
-    pub fn parse(sc: &mut Scanner) -> Result<AspAssignment,ParseError> {
-        match sc.next_token() {
-            Token::Name(value) => {
-                let name = AspName(value);
+    pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspAssignment,ParseError> {
+
+        logger.enter_parser("AspAssignment");
+
+        let asp_assignment = match sc.cur_token() {
+            Token::Name(_) => {
+                let name = AspName::parse(sc, logger)?;
                 sc.skip(Token::Equal)?;
-                let expr = AspExpr::parse(sc)?;
+                let expr = AspExpr::parse(sc, logger)?;
                 sc.skip(Token::Newline)?;
                 Ok(AspAssignment {name,expr} )
             },
-            // TODO: Generalize parse error. Dont hard code Token::Name
-            token => Err(ParseError::new(token, Token::Name(String::new()), sc.cur_line()))
-        }
+            // TODO: Generalize parse error. Remove all panics
+            _ => panic!()
+        };
+
+        logger.leave_parser("AspAssignment");
+        asp_assignment
     }
 
     pub fn eval(&self, cur_scope: &mut Scope) -> RuntimeValue {

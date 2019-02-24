@@ -2,6 +2,7 @@ use crate::parser::asp_expr::AspExpr;
 use crate::scanner::scanner::Scanner;
 use crate::scanner::token::Token;
 use crate::parser::error::ParseError;
+use crate::log::logger::Logger;
 
 #[derive(Debug)]
 pub struct AspArguments {
@@ -9,7 +10,8 @@ pub struct AspArguments {
 }
 
 impl AspArguments {
-    pub fn parse(sc: &mut Scanner) -> Result<AspArguments,ParseError> {
+    pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspArguments,ParseError> {
+        logger.enter_parser("AspArguments");
         let mut aa = AspArguments{exprs:vec![]};
         sc.skip(Token::LeftPar)?;
         if let Token::RightPar = sc.cur_token() {
@@ -17,7 +19,7 @@ impl AspArguments {
             return Ok(aa);
         }
         loop {
-            aa.exprs.push(AspExpr::parse(sc)?);
+            aa.exprs.push(AspExpr::parse(sc, logger)?);
             if sc.cur_token() == &Token::Comma {
                 sc.skip(Token::Comma)?;
                 continue;
@@ -26,6 +28,7 @@ impl AspArguments {
         }
         sc.skip(Token::RightPar)?;
         sc.skip(Token::Newline)?;
+        logger.leave_parser("AspArguments");
         Ok(aa)
     }
 }

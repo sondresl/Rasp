@@ -25,15 +25,17 @@ fn main() {
     println!("This is the Rasp Interpreter");
     println!("Parsing {}", filename);
     let mut sc = Scanner::new(&infile).unwrap();
-    let program = AspProgram::parse(&mut sc).unwrap_or_else(|p| {
+
+    println!("Writing to log file '{}' ... ", logfile);
+    let mut logger = Logger::new(&logfile).unwrap();
+
+    let program = AspProgram::parse(&mut sc, &mut logger).unwrap_or_else(|p| {
         println!("{}", "Error! Failed to parse program:".red());
         println!("{}", p);
         exit(1);
     });
     // program.eval();
-    println!("Writing to log file '{}' ... ", logfile);
-    let mut logger = Logger::new(&logfile).unwrap();
-    program.test_parser(&mut logger).expect("Error during test_parser");
+//    program.test_parser(&mut logger).expect("Error during test_parser");
     println!("Done");
 }
 
