@@ -17,3 +17,8 @@ but there might be a more idiomatic way of doing this in rust. Mainly im thinkin
 into different modules. For example, the logger module would provide the impl for each ast element with the logging
 functions.
 
+### Error handling
+The logger currently returns unchecked results because it is writing to file.
+ParserError need to implement From<io error> or something.
+ParserError also should be an enum with a few variants, and possibly using the failure crate.
+
