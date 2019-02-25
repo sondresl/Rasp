@@ -11,7 +11,7 @@ pub struct AspArguments {
 
 impl AspArguments {
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspArguments,ParseError> {
-        logger.enter_parser("AspArguments");
+        logger.enter_parser("AspArguments")?;
         let mut aa = AspArguments{exprs:vec![]};
         sc.skip(Token::LeftPar)?;
         if let Token::RightPar = sc.cur_token() {
@@ -28,7 +28,7 @@ impl AspArguments {
         }
         sc.skip(Token::RightPar)?;
         sc.skip(Token::Newline)?;
-        logger.leave_parser("AspArguments");
+        logger.leave_parser("AspArguments")?;
         Ok(aa)
     }
 }

@@ -1,5 +1,5 @@
 
-#[derive(Debug,PartialEq)]
+#[derive(Debug,PartialEq, Clone)]
 pub enum Token {
     Name(String),
     StringLiteral(String),

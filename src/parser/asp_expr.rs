@@ -17,7 +17,7 @@ pub struct AspExpr {
 impl AspExpr {
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspExpr,ParseError> {
 
-        logger.enter_parser("AspExpr");
+        logger.enter_parser("AspExpr")?;
 
         let atom = AspAtom::parse(sc, logger)?;
         let suffix = match sc.cur_token() {
@@ -25,7 +25,7 @@ impl AspExpr {
             _ => None
         };
 
-        logger.leave_parser("AspExpr");
+        logger.leave_parser("AspExpr")?;
 
         Ok(AspExpr{atom,suffix})
     }

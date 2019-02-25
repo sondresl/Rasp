@@ -1,9 +1,9 @@
 #![feature(range_contains)]
 #![allow(dead_code, unused_variables)]
 
-#[macro_use]
-extern crate derive_new;
 extern crate colored;
+#[macro_use]
+extern crate failure;
 
 mod scanner;
 mod parser;
