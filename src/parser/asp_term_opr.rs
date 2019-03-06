@@ -1,4 +1,3 @@
 
-pub enum AspTermOpr {
-
-}
+#[derive(Debug)]
+pub enum AspTermOpr {}

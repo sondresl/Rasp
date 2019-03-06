@@ -1,4 +1,3 @@
 
-pub enum AspCompOpr {
-
-}
+#[derive(Debug)]
+pub enum AspCompOpr {}

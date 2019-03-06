@@ -1,4 +1,3 @@
 
-pub enum AspFactorPrefix {
-
-}
+#[derive(Debug)]
+pub enum AspFactorPrefix {}

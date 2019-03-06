@@ -2,7 +2,7 @@ use crate::scanner::token::Token;
 use std::io;
 
 #[derive(Debug,Fail)]
-pub enum ParseError {
+pub enum AspParseError {
     #[fail(display = "Expected <{:#?}>, but found <{:#?}> on line {}", expected, found, line_number)]
     Expected {
         expected: Token,
@@ -21,9 +21,9 @@ pub enum ParseError {
     }
 }
 
-impl From<io::Error> for ParseError {
+impl From<io::Error> for AspParseError {
     fn from(it: io::Error) -> Self {
-        ParseError::IO {
+        AspParseError::IO {
             io_error: it
         }
     }

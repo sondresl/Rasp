@@ -6,7 +6,7 @@ use std::io;
 use std::io::{BufRead, BufReader};
 use std::prelude::v1::Vec;
 use std::result::Result::Ok;
-use crate::parser::error::ParseError;
+use crate::parser::error::AspParseError;
 
 pub struct Scanner {
     token_buffer: VecDeque<Token>,
@@ -38,10 +38,10 @@ impl Scanner {
         return self.token_buffer.pop_front().unwrap();
     }
 
-    pub fn skip(&mut self, token: Token) -> Result<(),ParseError> {
+    pub fn skip(&mut self, token: Token) -> Result<(), AspParseError> {
         let t = self.next_token();
         if t == token { return Ok(()) }
-        return Err(ParseError::Expected{expected:token, found:t, line_number:self.cur_line as usize})
+        return Err(AspParseError::Expected{expected:token, found:t, line_number:self.cur_line as usize})
     }
 
     pub fn has_equal_token(&self) -> bool {
