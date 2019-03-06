@@ -7,6 +7,18 @@ pub mod asp_program;
 pub mod asp_stmt;
 pub mod asp_string;
 pub mod error;
+pub mod asp_and_test;
+pub mod asp_not_test;
+pub mod asp_comparison;
+pub mod asp_term;
+pub mod asp_comp_opr;
+pub mod asp_term_opr;
+pub mod asp_factor;
+pub mod asp_factor_opr;
+pub mod asp_factor_prefix;
+pub mod asp_primary;
+pub mod asp_primary_suffix;
+pub mod asp_subscription;
 
 #[cfg(test)]
 mod parser_tests {
