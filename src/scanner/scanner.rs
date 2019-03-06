@@ -84,7 +84,9 @@ fn scan_line_tokens(line: String, tokens: &mut VecDeque<Token>) {
             ','       => (Token::Comma,     1),
             '('       => (Token::LeftPar,   1),
             ')'       => (Token::RightPar,  1),
-            '\''      => (scan_string(&chars[index + 1..])),
+            '+'       => (Token::Plus,      1),
+            '\''      => scan_string(&chars[index + 1..]),
+            '1'...'9' => scan_number(&chars[index..]),
             '_'       |
             'a'...'z' |
             'A'...'Z' => scan_name(&chars[index..]),
@@ -124,4 +126,17 @@ fn scan_string(chars: &[char]) -> (Token, usize) {
         string.push(*c);
     }
     (Token::StringLiteral(string), offset)
+}
+
+fn scan_number(chars: &[char]) -> (Token, usize) {
+    let mut offset = 0;
+    let mut number = String::new();
+    for c in chars.iter() {
+        if !c.is_numeric() {
+            break;
+        }
+        number.push(*c);
+        offset += 1;
+    }
+    (Token::IntegerLiteral(number.parse().unwrap()), offset)
 }

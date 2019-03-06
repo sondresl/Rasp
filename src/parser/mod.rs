@@ -15,11 +15,13 @@ mod parser_tests {
 
     use std::io::BufReader;
     use std::collections::VecDeque;
+    use crate::log::logger::Logger;
 
     #[test]
     fn mini_asp() {
+        let mut logger = Logger::new("log/mini.log").unwrap();
         let mut sc = Scanner::new("asp/mini.asp").unwrap();
-        let program = AspProgram::parse(&mut sc);
+        let program = AspProgram::parse(&mut sc, &mut logger);
         println!("{:?}", program);
     }
 }
