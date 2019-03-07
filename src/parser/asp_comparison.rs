@@ -13,12 +13,12 @@ pub struct AspComparison {
 
 impl AspComparison {
 
-    pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspComparison,AspParseError> {
-        Ok(AspComparison {
-            terms: vec![
-                AspTerm::parse(sc, logger)?
-            ],
-            comp_oprs: vec![]
-        })
+    pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspComparison, AspParseError> {
+        logger.enter_parser("AspComparison")?;
+
+        let a = AspComparison { terms: vec![ AspTerm::parse(sc, logger)?  ], comp_oprs: vec![] };
+
+        logger.leave_parser("AspComparison")?;
+        Ok(a)
     }
 }

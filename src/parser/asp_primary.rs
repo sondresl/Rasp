@@ -19,7 +19,7 @@ pub struct AspPrimary {
 impl AspPrimary {
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspPrimary, AspParseError> {
 
-        logger.enter_parser("AspExpr")?;
+        logger.enter_parser("AspPrimary")?;
 
         let atom = AspAtom::parse(sc, logger)?;
         let suffix = match sc.cur_token() {
@@ -27,7 +27,7 @@ impl AspPrimary {
             _ => None
         };
 
-        logger.leave_parser("AspExpr")?;
+        logger.leave_parser("AspPrimary")?;
 
         Ok(AspPrimary{atom,suffix})
     }

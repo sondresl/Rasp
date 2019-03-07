@@ -18,7 +18,10 @@ pub enum AspParseError {
     #[fail(display = "Encountered IO Error during parsing: {}", io_error)]
     IO {
         io_error: io::Error
-    }
+    },
+    #[fail(display = "Encountered some error during parsing!")]
+    IDK
+
 }
 
 impl From<io::Error> for AspParseError {

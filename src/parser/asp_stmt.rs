@@ -24,7 +24,10 @@ impl AspStmt {
         let asp_stmt = if sc.has_equal_token() {
             Assignment(AspAssignment::parse(sc, logger)?)
         } else {
-            ExprStmt(AspExpr::parse(sc, logger)?)
+            logger.enter_parser("AspExprStmt")?;
+            let a = ExprStmt(AspExpr::parse(sc, logger)?);
+            logger.leave_parser("AspExprStmt")?;
+            a
         };
 
         logger.leave_parser("AspStmt enum")?;

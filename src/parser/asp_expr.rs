@@ -17,10 +17,11 @@ pub struct AspExpr {
 impl AspExpr {
 
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspExpr, AspParseError> {
-        Ok(AspExpr::new(
-            vec![
-                AspAndTest::parse(sc, logger)?
-            ]
-        ))
+        logger.enter_parser("AspExpr")?;
+
+        let a = AspExpr::new(vec![AspAndTest::parse(sc, logger)?]);
+
+        logger.leave_parser("AspExpr")?;
+        Ok(a)
     }
 }

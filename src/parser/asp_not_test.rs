@@ -13,9 +13,11 @@ pub struct AspNotTest {
 impl AspNotTest {
 
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspNotTest, AspParseError> {
-        Ok(AspNotTest {
-            not: false,
-            comparison: AspComparison::parse(sc, logger)?
-        })
+        logger.enter_parser("AspNotTest");
+
+        let a = AspNotTest { not: false, comparison: AspComparison::parse(sc, logger)?  };
+
+        logger.leave_parser("AspNotTest");
+        Ok(a)
     }
 }

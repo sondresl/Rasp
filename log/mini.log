@@ -3,3 +3,84 @@
     <AspAssignment>
       <AspName>
       </AspName>
+      <AspExpr>
+        <AspAndTest>
+          <AspNotTest>
+            <AspComparison>
+              <AspTerm>
+                <AspFactor>
+                  <AspPrimary>
+                    <AspAtom>
+                      <AspString>
+                      </AspString>
+                    </AspAtom>
+                  </AspPrimary>
+                </AspFactor>
+              </AspTerm>
+            </AspComparison>
+          </AspNotTest>
+        </AspAndTest>
+      </AspExpr>
+    </AspAssignment>
+  </AspStmt enum>
+  <AspStmt enum>
+    <AspExprStmt>
+      <AspExpr>
+        <AspAndTest>
+          <AspNotTest>
+            <AspComparison>
+              <AspTerm>
+                <AspFactor>
+                  <AspPrimary>
+                    <AspAtom>
+                      <AspName>
+                      </AspName>
+                    </AspAtom>
+                    <AspArguments>
+                      <AspExpr>
+                        <AspAndTest>
+                          <AspNotTest>
+                            <AspComparison>
+                              <AspTerm>
+                                <AspFactor>
+                                  <AspPrimary>
+                                    <AspAtom>
+                                      <AspString>
+                                      </AspString>
+                                    </AspAtom>
+                                  </AspPrimary>
+                                </AspFactor>
+                              </AspTerm>
+                            </AspComparison>
+                          </AspNotTest>
+                        </AspAndTest>
+                      </AspExpr>
+                      <AspExpr>
+                        <AspAndTest>
+                          <AspNotTest>
+                            <AspComparison>
+                              <AspTerm>
+                                <AspFactor>
+                                  <AspPrimary>
+                                    <AspAtom>
+                                      <AspName>
+                                      </AspName>
+                                    </AspAtom>
+                                  </AspPrimary>
+                                </AspFactor>
+                              </AspTerm>
+                            </AspComparison>
+                          </AspNotTest>
+                        </AspAndTest>
+                      </AspExpr>
+                    </AspArguments>
+                  </AspPrimary>
+                </AspFactor>
+              </AspTerm>
+            </AspComparison>
+          </AspNotTest>
+        </AspAndTest>
+      </AspExpr>
+    </AspExprStmt>
+  </AspStmt enum>
+</AspProgram>
