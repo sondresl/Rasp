@@ -1,12 +1,33 @@
 
 use std::collections::HashMap;
+use crate::runtime::runtime::RuntimeValue::*;
 
 pub enum RuntimeValue {
-    RuntimeInteger,
-    RuntimeFloat,
-    RuntimeBoolean,
-    RuntimeString,
+    RuntimeInteger(i64),
+    RuntimeFloat(f64),
+    RuntimeBoolean(bool),
+    RuntimeString(String),
     RuntimeNone,
+}
+
+impl RuntimeValue {
+
+    fn add(self, other: RuntimeValue) -> RuntimeValue {
+        match self {
+            RuntimeInteger(v1) => match other {
+                RuntimeFloat(v2) => RuntimeFloat(v1 as f64 + v2),
+                _ => RuntimeInteger(v1 + other.int())
+            }
+        }
+    }
+
+    fn int(self) -> RuntimeValue {
+        match self {
+            RuntimeInteger(v) |
+            RuntimeFloat(v)   => RuntimeInteger(v as i64),
+            _ => panic!()
+        }
+    }
 }
 
 pub struct Scope {
