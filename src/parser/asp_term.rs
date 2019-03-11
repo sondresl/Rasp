@@ -16,21 +16,27 @@ pub struct AspTerm {
 impl AspTerm {
 
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspTerm,AspParseError> {
-        // let mut factors = vec![];
-        // let mut oprs = vec![];
-        // factors.push(AspFactor::parse(sc, logger)?);
-        // match sc.cur_token() {
-        //     &Token::Plus | &Token::Minus 
-        //         => AspTermOpr::parse(sc, logger)?,
-        //     _   => return Err(AspParseError::IDK)
-        // };
-        // Ok(AspTerm::new(factors, oprs))
+
 
         logger.enter_parser("AspTerm")?;
 
-        let a = AspTerm::new(vec![AspFactor::parse(sc, logger)?], vec![]);
+//        let a = AspTerm::new(vec![AspFactor::parse(sc, logger)?], vec![]);
+
+        let mut factors = vec![];
+        let mut oprs = vec![];
+
+        loop {
+            // TODO: Prefix
+            factors.push(AspFactor::parse(sc, logger)?);
+            match sc.cur_token() {
+                &Token::Plus  |
+                &Token::Minus => oprs.push(AspTermOpr::parse(sc, logger)?),
+                _             => break
+            };
+        }
 
         logger.leave_parser("AspTerm")?;
-        Ok(a)
+
+        Ok(AspTerm::new(factors, oprs))
     }
 }

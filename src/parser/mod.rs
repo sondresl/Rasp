@@ -19,6 +19,7 @@ pub mod asp_factor_prefix;
 pub mod asp_primary;
 pub mod asp_primary_suffix;
 pub mod asp_subscription;
+pub mod asp_integer;
 
 #[cfg(test)]
 mod parser_tests {
@@ -33,7 +34,16 @@ mod parser_tests {
     fn mini_asp() {
         let mut logger = Logger::new("log/mini.log").unwrap();
         let mut sc = Scanner::new("asp/mini.asp").unwrap();
-        let program = AspProgram::parse(&mut sc, &mut logger);
+        let program = AspProgram::parse(&mut sc, &mut logger).unwrap();
         println!("{:?}", program);
     }
+
+    #[test]
+    fn expressions_asp() {
+        let mut logger = Logger::new("log/expressions.log").unwrap();
+        let mut sc = Scanner::new("asp/expressions.asp").unwrap();
+        let program = AspProgram::parse(&mut sc, &mut logger).unwrap();
+        println!("{:?}", program);
+    }
+
 }

@@ -12,10 +12,17 @@ pub enum AspTermOpr {
 impl AspTermOpr {
 
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspTermOpr, AspParseError> {
-        Ok(match sc.next_token() {
+
+        logger.enter_parser("AspTermOpr");
+
+        let a = match sc.next_token() {
             Token::Plus => AspTermOpr::Plus,
             Token::Minus => AspTermOpr::Minus,
             _            => return Err(AspParseError::IDK),
-        })
+        };
+
+        logger.leave_parser("AspTermOpr");
+
+        Ok(a)
     }
 }

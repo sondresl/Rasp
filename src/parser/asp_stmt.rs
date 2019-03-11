@@ -8,6 +8,7 @@ use crate::runtime::runtime::Scope;
 use crate::runtime::runtime::RuntimeValue;
 use crate::log::logger::Logger;
 use std::io;
+use crate::scanner::token::Token;
 
 
 #[derive(Debug)]
@@ -26,6 +27,7 @@ impl AspStmt {
         } else {
             logger.enter_parser("AspExprStmt")?;
             let a = ExprStmt(AspExpr::parse(sc, logger)?);
+            sc.skip(Token::Newline);
             logger.leave_parser("AspExprStmt")?;
             a
         };
