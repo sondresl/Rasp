@@ -2,6 +2,7 @@
 use std::collections::HashMap;
 use crate::runtime::runtime::RuntimeValue::*;
 
+#[derive(Debug)]
 pub enum RuntimeValue {
     RuntimeInteger(i64),
     RuntimeFloat(f64),
@@ -12,18 +13,20 @@ pub enum RuntimeValue {
 
 impl RuntimeValue {
 
-    fn add(self, other: RuntimeValue) -> RuntimeValue {
+    pub fn add(self, other: RuntimeValue) -> RuntimeValue {
         match self {
             RuntimeInteger(v1) => match other {
+                RuntimeInteger(v2) => RuntimeInteger(v1 + v2),
                 RuntimeFloat(v2) => RuntimeFloat(v1 as f64 + v2),
-                _ => RuntimeInteger(v1 + other.int())
-            }
+                _ => self.add(other.int())
+            },
+            _ => panic!()
         }
     }
 
     fn int(self) -> RuntimeValue {
         match self {
-            RuntimeInteger(v) |
+            RuntimeInteger(v) => RuntimeInteger(v),
             RuntimeFloat(v)   => RuntimeInteger(v as i64),
             _ => panic!()
         }

@@ -33,9 +33,8 @@ impl AspPrimary {
     }
 
     pub fn eval(&self, cur_scope: &mut Scope) -> RuntimeValue {
-        let rv = RuntimeValue::RuntimeNone;
-
-        rv
+        //TODO
+        self.atom.eval(cur_scope)
     }
 
 }

@@ -6,6 +6,8 @@ use crate::parser::error::AspParseError;
 use crate::log::logger::Logger;
 use std::io;
 use crate::parser::asp_integer::AspInteger;
+use crate::runtime::runtime::{Scope, RuntimeValue};
+use crate::runtime::runtime::RuntimeValue::RuntimeInteger;
 
 #[derive(Debug)]
 pub enum AspAtom {
@@ -35,4 +37,10 @@ impl AspAtom {
         Ok(asp_atom)
     }
 
+    pub fn eval(&self, cur_scope: &mut Scope) -> RuntimeValue {
+        match self {
+            AspAtom::Int(v) => RuntimeInteger(v.0),
+            _ => panic!("Did not find an Int but {:?}", self)
+        }
+    }
 }

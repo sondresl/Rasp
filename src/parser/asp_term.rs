@@ -6,6 +6,8 @@ use crate::scanner::scanner::Scanner;
 use crate::log::logger::Logger;
 use crate::parser::asp_expr::AspExpr;
 use crate::parser::error::AspParseError;
+use crate::runtime::runtime::{Scope, RuntimeValue};
+use crate::runtime::runtime::RuntimeValue::RuntimeNone;
 
 #[derive(Debug, new)]
 pub struct AspTerm {
@@ -38,5 +40,19 @@ impl AspTerm {
         logger.leave_parser("AspTerm")?;
 
         Ok(AspTerm::new(factors, oprs))
+    }
+
+    pub fn eval(&self, mut cur_scope: &mut Scope) -> RuntimeValue {
+        //TODO
+        let mut a = self.factors[0].eval(cur_scope);
+        dbg!(&a);
+        for (fac, opr) in self.factors[1..].iter().zip(self.oprs.iter()) {
+            dbg!((fac, opr));
+            a = match opr {
+                AspTermOpr::Plus => a.add(fac.eval(cur_scope)),
+                _ => panic!()
+            };
+        };
+        a
     }
 }

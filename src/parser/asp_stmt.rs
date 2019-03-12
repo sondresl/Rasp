@@ -37,16 +37,16 @@ impl AspStmt {
         Ok(asp_stmt)
     }
 
-}
-    // See asp_program.rs for early doc of eval.
-//    pub fn eval(&self, mut cur_scope: &mut Scope) -> RuntimeValue {
-//        let rv = match self {
-//            Assignment(v) => v.eval(&mut cur_scope),
-////            ExprStmt(v)   => v.eval(&mut cur_scope),
-//        };
-//        rv
-//    }
 
+    // See asp_program.rs for early doc of eval.
+    pub fn eval(&self, mut cur_scope: &mut Scope) -> RuntimeValue {
+        match self {
+            Assignment(v) => v.eval(&mut cur_scope),
+            ExprStmt(v)   => v.eval(&mut cur_scope),
+        }
+    }
+
+}
 //    pub fn test_parser(&self, logger: &mut Logger) -> io::Result<()> {
 //        logger.enter_parser("AspStmt enum")?;
 //        match self {

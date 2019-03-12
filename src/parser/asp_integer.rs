@@ -4,7 +4,7 @@ use crate::parser::error::AspParseError;
 use crate::scanner::token::Token;
 
 #[derive(Debug)]
-pub struct AspInteger(i64);
+pub struct AspInteger(pub i64);
 
 impl AspInteger {
 

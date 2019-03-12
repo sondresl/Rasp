@@ -27,32 +27,21 @@ impl AspProgram {
 
         Ok(program)
     }
+
+    /// As the highest level in the ast, eval is first called on this instance,
+    /// which calls it on all the elements in the stmts vec.
+    ///
+    /// This function should have a global scope, with builtin functions.
+    ///
+    pub fn eval(&self) -> RuntimeValue {
+        let mut sc = Scope::new(None);
+        let mut rv = RuntimeValue::RuntimeNone;
+        for v in &self.stmts {
+            rv = v.eval(&mut sc);
+        }
+        rv
+    }
 }
-
-    // As the highest level in the ast, eval is first called on this instance,
-    // which calls it on all the elements in the stmts vec.
-    //
-    // This function should have a global scope, with builtin functions.
-    //
-//    pub fn eval(&self) -> RuntimeValue {
-//        let mut sc = Scope::new(None);
-//        let rv = RuntimeValue::RuntimeNone;
-//        for v in &self.stmts {
-//            v.eval(&mut sc);
-//        }
-//        rv
-//    }
-
-//    /// Since this is the method called, it takes no arguments beyond
-//    /// self, and then sends the writer (and indentation level) down
-//    /// the stack.
-//    pub fn test_parser(&self, logger: &mut Logger) -> io::Result<()> {
-//        logger.enter_parser("AspProgram")?;
-//        for s in &self.stmts {
-//            s.test_parser(logger)?;
-//        }
-//        logger.leave_parser("AspProgram")
-//    }
 
 /// Test of Display trait.
 /// Possible to make recursive calls down? To display the whole program tree?

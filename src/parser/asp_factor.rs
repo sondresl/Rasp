@@ -4,6 +4,7 @@ use crate::parser::asp_factor_prefix::AspFactorPrefix;
 use crate::parser::asp_primary::AspPrimary;
 use crate::parser::asp_factor_opr::AspFactorOpr;
 use crate::parser::error::AspParseError;
+use crate::runtime::runtime::{Scope, RuntimeValue};
 
 
 #[derive(Debug, new)]
@@ -23,5 +24,10 @@ impl AspFactor {
 
         logger.leave_parser("AspFactor")?;
         Ok(a)
+    }
+
+    pub fn eval(&self, cur_scope: &mut Scope) -> RuntimeValue {
+        //TODO
+        self.primaries[0].eval(cur_scope)
     }
 }

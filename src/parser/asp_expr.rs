@@ -24,4 +24,9 @@ impl AspExpr {
         logger.leave_parser("AspExpr")?;
         Ok(a)
     }
+
+    pub fn eval(&self, cur_scope: &mut Scope) -> RuntimeValue {
+        // TODO
+        self.and_tests[0].eval(cur_scope)
+    }
 }

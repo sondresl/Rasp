@@ -43,6 +43,7 @@ impl AspAssignment {
         // Need to make the scopes that something other than String, or
         // get a string from AspName. 
         // cur_scope.insert(self.name.name, self.expr.eval(&mut cur_scope));
+        unimplemented!();
         RuntimeValue::RuntimeNone
     }
 

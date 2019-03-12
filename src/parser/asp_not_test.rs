@@ -3,6 +3,7 @@ use crate::scanner::scanner::Scanner;
 use crate::log::logger::Logger;
 use crate::parser::error::AspParseError;
 use crate::parser::asp_expr::AspExpr;
+use crate::runtime::runtime::{Scope, RuntimeValue};
 
 #[derive(Debug)]
 pub struct AspNotTest {
@@ -19,5 +20,10 @@ impl AspNotTest {
 
         logger.leave_parser("AspNotTest");
         Ok(a)
+    }
+
+    pub fn eval(&self, mut cur_scope: &mut Scope) -> RuntimeValue {
+        //TODO
+        self.comparison.eval(cur_scope)
     }
 }
