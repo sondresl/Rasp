@@ -6,7 +6,7 @@ use std::io;
 use std::io::{BufRead, BufReader};
 use std::prelude::v1::Vec;
 use std::result::Result::Ok;
-use crate::parser::error::ParseError;
+use crate::parser::error::AspParseError;
 
 pub struct Scanner {
     token_buffer: VecDeque<Token>,
@@ -38,10 +38,10 @@ impl Scanner {
         return self.token_buffer.pop_front().unwrap();
     }
 
-    pub fn skip(&mut self, token: Token) -> Result<(),ParseError> {
+    pub fn skip(&mut self, token: Token) -> Result<(), AspParseError> {
         let t = self.next_token();
         if t == token { return Ok(()) }
-        return Err(ParseError::Expected{expected:token, found:t, line_number:self.cur_line as usize})
+        return Err(AspParseError::Expected{expected:token, found:t, line_number:self.cur_line as usize})
     }
 
     pub fn has_equal_token(&self) -> bool {
@@ -84,7 +84,9 @@ fn scan_line_tokens(line: String, tokens: &mut VecDeque<Token>) {
             ','       => (Token::Comma,     1),
             '('       => (Token::LeftPar,   1),
             ')'       => (Token::RightPar,  1),
-            '\''      => (scan_string(&chars[index + 1..])),
+            '+'       => (Token::Plus,      1),
+            '\''      => scan_string(&chars[index + 1..]),
+            '1'...'9' => scan_number(&chars[index..]),
             '_'       |
             'a'...'z' |
             'A'...'Z' => scan_name(&chars[index..]),
@@ -124,4 +126,17 @@ fn scan_string(chars: &[char]) -> (Token, usize) {
         string.push(*c);
     }
     (Token::StringLiteral(string), offset)
+}
+
+fn scan_number(chars: &[char]) -> (Token, usize) {
+    let mut offset = 0;
+    let mut number = String::new();
+    for c in chars.iter() {
+        if !c.is_numeric() {
+            break;
+        }
+        number.push(*c);
+        offset += 1;
+    }
+    (Token::IntegerLiteral(number.parse().unwrap()), offset)
 }

@@ -2,7 +2,7 @@ use crate::scanner::scanner::Scanner;
 use crate::scanner::token::Token;
 use crate::parser::asp_name::AspName;
 use crate::parser::asp_expr::AspExpr;
-use crate::parser::error::ParseError;
+use crate::parser::error::AspParseError;
 use crate::runtime::runtime::RuntimeValue;
 use crate::runtime::runtime::Scope;
 use crate::log::logger::Logger;
@@ -15,7 +15,7 @@ pub struct AspAssignment {
 }
 
 impl AspAssignment {
-    pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspAssignment,ParseError> {
+    pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspAssignment, AspParseError> {
 
         logger.enter_parser("AspAssignment")?;
 
@@ -27,7 +27,7 @@ impl AspAssignment {
                 sc.skip(Token::Newline)?;
                 Ok(AspAssignment {name,expr} )
             },
-            token => return Err(ParseError::Expected {
+            token => return Err(AspParseError::Expected {
                 expected: Token::Name(String::new()),
                 found: token.clone(),
                 line_number: sc.cur_line() as usize
@@ -49,8 +49,8 @@ impl AspAssignment {
     pub fn test_parser(&self, logger: &mut Logger) -> io::Result<()> {
         logger.enter_parser("AspAssignment")?;
 
-        self.name.test_parser(logger)?;
-        self.expr.test_parser(logger)?;
+//        self.name.test_parser(logger)?;
+//        self.expr.test_parser(logger)?;
 
         logger.leave_parser("AspAssignment")
     }

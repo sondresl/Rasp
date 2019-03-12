@@ -4,6 +4,8 @@
 extern crate colored;
 #[macro_use]
 extern crate failure;
+#[macro_use]
+extern crate derive_new;
 
 mod scanner;
 mod parser;

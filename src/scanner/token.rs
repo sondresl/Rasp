@@ -11,5 +11,7 @@ pub enum Token {
     RightPar,
     Comma,
     Newline,
+    Plus,
+    Minus,
     EoF
 }

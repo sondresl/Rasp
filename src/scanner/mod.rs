@@ -38,4 +38,19 @@ mod scanner_tests {
 
         assert_same_tokens(&mut sc, tokens);
     }
+
+    #[test]
+    fn expressions_asp() {
+        let mut sc = Scanner::new("asp/expressions.asp").unwrap();
+
+        let tokens = vec![
+            IntegerLiteral(1),
+            Plus,
+            IntegerLiteral(2),
+            Newline,
+            EoF
+        ];
+
+        assert_same_tokens(&mut sc, tokens);
+    }
 }
