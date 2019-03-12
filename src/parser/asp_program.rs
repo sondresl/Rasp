@@ -6,7 +6,6 @@ use crate::runtime::runtime::RuntimeValue;
 use crate::runtime::runtime::Scope;
 use crate::log::logger::Logger;
 use std::fmt;
-use std::io;
 
 #[derive(Debug)]
 pub struct AspProgram {

@@ -13,15 +13,15 @@ impl AspTermOpr {
 
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspTermOpr, AspParseError> {
 
-        logger.enter_parser("AspTermOpr");
+        logger.enter_parser("AspTermOpr")?;
 
         let a = match sc.next_token() {
             Token::Plus => AspTermOpr::Plus,
             Token::Minus => AspTermOpr::Minus,
-            _            => return Err(AspParseError::IDK),
+            _            => return Err(AspParseError::IDK), // TODO
         };
 
-        logger.leave_parser("AspTermOpr");
+        logger.leave_parser("AspTermOpr")?;
 
         Ok(a)
     }

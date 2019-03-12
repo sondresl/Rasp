@@ -20,7 +20,7 @@ impl RuntimeValue {
                 RuntimeFloat(v2) => RuntimeFloat(v1 as f64 + v2),
                 _ => self.add(other.int())
             },
-            _ => panic!()
+            _ => unimplemented!()
         }
     }
 
@@ -28,7 +28,7 @@ impl RuntimeValue {
         match self {
             RuntimeInteger(v) => RuntimeInteger(v),
             RuntimeFloat(v)   => RuntimeInteger(v as i64),
-            _ => panic!()
+            _ => unimplemented!()
         }
     }
 }

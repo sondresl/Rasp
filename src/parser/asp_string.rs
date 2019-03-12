@@ -1,5 +1,4 @@
 use crate::log::logger::Logger;
-use std::io;
 use crate::scanner::scanner::Scanner;
 use crate::parser::error::AspParseError;
 use crate::scanner::token::Token;

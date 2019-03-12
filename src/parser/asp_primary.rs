@@ -5,9 +5,7 @@ use crate::log::logger::Logger;
 use crate::parser::asp_arguments::AspArguments;
 use crate::scanner::token::Token;
 use crate::runtime::runtime::RuntimeValue;
-use crate::parser::asp_expr::AspExpr;
 use crate::runtime::runtime::Scope;
-use std::io;
 use crate::parser::error::AspParseError;
 
 #[derive(Debug)]

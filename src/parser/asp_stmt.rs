@@ -7,7 +7,6 @@ use crate::parser::error::AspParseError;
 use crate::runtime::runtime::Scope;
 use crate::runtime::runtime::RuntimeValue;
 use crate::log::logger::Logger;
-use std::io;
 use crate::scanner::token::Token;
 
 
@@ -18,6 +17,7 @@ pub enum AspStmt {
 }
 
 impl AspStmt {
+
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspStmt, AspParseError> {
 
         logger.enter_parser("AspStmt enum")?;
@@ -27,7 +27,7 @@ impl AspStmt {
         } else {
             logger.enter_parser("AspExprStmt")?;
             let a = ExprStmt(AspExpr::parse(sc, logger)?);
-            sc.skip(Token::Newline);
+            sc.skip(Token::Newline); // TODO: Unhandled error. Program crashes here
             logger.leave_parser("AspExprStmt")?;
             a
         };
@@ -37,8 +37,6 @@ impl AspStmt {
         Ok(asp_stmt)
     }
 
-
-    // See asp_program.rs for early doc of eval.
     pub fn eval(&self, mut cur_scope: &mut Scope) -> RuntimeValue {
         match self {
             Assignment(v) => v.eval(&mut cur_scope),
@@ -47,14 +45,4 @@ impl AspStmt {
     }
 
 }
-//    pub fn test_parser(&self, logger: &mut Logger) -> io::Result<()> {
-//        logger.enter_parser("AspStmt enum")?;
-//        match self {
-//            // TODO
-//            // Possible to match multiple enums to do the same
-//            // thing? _(v) => v.test_parser() ????
-////            Assignment(v) => v.test_parser(logger)?,
-////            ExprStmt(v)   => v.test_parser(logger)?,
-//        }
-//        logger.leave_parser("AspStmt enum")
-//    }
+

@@ -4,10 +4,8 @@ use crate::parser::asp_factor::AspFactor;
 use crate::parser::asp_term_opr::AspTermOpr;
 use crate::scanner::scanner::Scanner;
 use crate::log::logger::Logger;
-use crate::parser::asp_expr::AspExpr;
 use crate::parser::error::AspParseError;
 use crate::runtime::runtime::{Scope, RuntimeValue};
-use crate::runtime::runtime::RuntimeValue::RuntimeNone;
 
 #[derive(Debug, new)]
 pub struct AspTerm {
@@ -19,10 +17,7 @@ impl AspTerm {
 
     pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspTerm,AspParseError> {
 
-
         logger.enter_parser("AspTerm")?;
-
-//        let a = AspTerm::new(vec![AspFactor::parse(sc, logger)?], vec![]);
 
         let mut factors = vec![];
         let mut oprs = vec![];
@@ -42,17 +37,14 @@ impl AspTerm {
         Ok(AspTerm::new(factors, oprs))
     }
 
-    pub fn eval(&self, mut cur_scope: &mut Scope) -> RuntimeValue {
-        //TODO
-        let mut a = self.factors[0].eval(cur_scope);
-        dbg!(&a);
-        for (fac, opr) in self.factors[1..].iter().zip(self.oprs.iter()) {
-            dbg!((fac, opr));
-            a = match opr {
-                AspTermOpr::Plus => a.add(fac.eval(cur_scope)),
-                _ => panic!()
-            };
-        };
-        a
+    pub fn eval(&self, cur_scope: &mut Scope) -> RuntimeValue {
+        self.factors[1..].iter()
+            .zip(self.oprs.iter())
+            .fold(self.factors[0].eval(cur_scope), |rv, (factor, opr)| {
+                match opr {
+                    AspTermOpr::Plus =>  rv.add(factor.eval(cur_scope)),
+                    _ => unimplemented!()
+                }
+            })
     }
 }

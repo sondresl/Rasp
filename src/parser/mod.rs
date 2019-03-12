@@ -25,9 +25,6 @@ pub mod asp_integer;
 mod parser_tests {
     use crate::scanner::scanner::Scanner;
     use crate::parser::asp_program::AspProgram;
-
-    use std::io::BufReader;
-    use std::collections::VecDeque;
     use crate::log::logger::Logger;
 
     #[test]

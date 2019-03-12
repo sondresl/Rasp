@@ -6,7 +6,6 @@ use crate::parser::error::AspParseError;
 use crate::runtime::runtime::RuntimeValue;
 use crate::runtime::runtime::Scope;
 use crate::log::logger::Logger;
-use std::io;
 
 #[derive(Debug)]
 pub struct AspAssignment {
@@ -40,19 +39,7 @@ impl AspAssignment {
 
     pub fn eval(&self, cur_scope: &mut Scope) -> RuntimeValue {
         // TODO
-        // Need to make the scopes that something other than String, or
-        // get a string from AspName. 
-        // cur_scope.insert(self.name.name, self.expr.eval(&mut cur_scope));
         unimplemented!();
-        RuntimeValue::RuntimeNone
     }
 
-    pub fn test_parser(&self, logger: &mut Logger) -> io::Result<()> {
-        logger.enter_parser("AspAssignment")?;
-
-//        self.name.test_parser(logger)?;
-//        self.expr.test_parser(logger)?;
-
-        logger.leave_parser("AspAssignment")
-    }
 }
