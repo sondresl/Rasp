@@ -29,7 +29,7 @@ impl Logger {
     }
 
     pub fn write(&mut self, string: &str) -> io::Result<()> {
-        self.file.write_fmt(format_args!("{}", string))?;
+        self.file.write_fmt(format_args!("{}\n", string))?;
         Ok(())
     }
 }
