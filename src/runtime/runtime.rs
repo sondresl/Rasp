@@ -24,6 +24,16 @@ impl RuntimeValue {
         }
     }
 
+    pub fn minus(self, other: RuntimeValue) -> RuntimeValue {
+        match self {
+            RuntimeInteger(v1) => match other {
+                RuntimeInteger(v2) => RuntimeInteger(v1 - v2),
+                _ => unimplemented!()
+            },
+            _ => unimplemented!()
+        }
+    }
+
     fn int(self) -> RuntimeValue {
         match self {
             RuntimeInteger(v) => RuntimeInteger(v),

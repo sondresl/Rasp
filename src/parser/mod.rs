@@ -32,7 +32,6 @@ mod parser_tests {
         let mut logger = Logger::new("log/mini.log").unwrap();
         let mut sc = Scanner::new("asp/mini.asp").unwrap();
         let program = AspProgram::parse(&mut sc, &mut logger).unwrap();
-        println!("{:?}", program);
     }
 
     #[test]
@@ -40,7 +39,6 @@ mod parser_tests {
         let mut logger = Logger::new("log/expressions.log").unwrap();
         let mut sc = Scanner::new("asp/expressions.asp").unwrap();
         let program = AspProgram::parse(&mut sc, &mut logger).unwrap();
-        println!("{:?}", program);
     }
 
 }

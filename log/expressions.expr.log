@@ -1,4 +1,0 @@
-"1 + 2\n"
- ==> RuntimeInteger(3)
-"43 + 1005\n"
- ==> RuntimeInteger(1048)

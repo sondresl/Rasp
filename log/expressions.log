@@ -1,56 +1,34 @@
-<AspExpr>
-  <AspAndTest>
-    <AspNotTest>
-      <AspComparison>
-        <AspTerm>
-          <AspFactor>
-            <AspPrimary>
-              <AspAtom>
-                <AspInteger>
-                </AspInteger>
-              </AspAtom>
-            </AspPrimary>
-          </AspFactor>
-          <AspTermOpr>
-          </AspTermOpr>
-          <AspFactor>
-            <AspPrimary>
-              <AspAtom>
-                <AspInteger>
-                </AspInteger>
-              </AspAtom>
-            </AspPrimary>
-          </AspFactor>
-        </AspTerm>
-      </AspComparison>
-    </AspNotTest>
-  </AspAndTest>
-</AspExpr>
-<AspExpr>
-  <AspAndTest>
-    <AspNotTest>
-      <AspComparison>
-        <AspTerm>
-          <AspFactor>
-            <AspPrimary>
-              <AspAtom>
-                <AspInteger>
-                </AspInteger>
-              </AspAtom>
-            </AspPrimary>
-          </AspFactor>
-          <AspTermOpr>
-          </AspTermOpr>
-          <AspFactor>
-            <AspPrimary>
-              <AspAtom>
-                <AspInteger>
-                </AspInteger>
-              </AspAtom>
-            </AspPrimary>
-          </AspFactor>
-        </AspTerm>
-      </AspComparison>
-    </AspNotTest>
-  </AspAndTest>
-</AspExpr>
+<AspProgram>
+  <AspStmt enum>
+    <AspExprStmt>
+      <AspExpr>
+        <AspAndTest>
+          <AspNotTest>
+            <AspComparison>
+              <AspTerm>
+                <AspFactor>
+                  <AspPrimary>
+                    <AspAtom>
+                      <AspInteger>
+                      </AspInteger>
+                    </AspAtom>
+                  </AspPrimary>
+                </AspFactor>
+                <AspTermOpr>
+                </AspTermOpr>
+                <AspFactor>
+                  <AspPrimary>
+                    <AspAtom>
+                      <AspInteger>
+                      </AspInteger>
+                    </AspAtom>
+                  </AspPrimary>
+                </AspFactor>
+              </AspTerm>
+            </AspComparison>
+          </AspNotTest>
+        </AspAndTest>
+      </AspExpr>
+    </AspExprStmt>
+  </AspStmt enum>
+</AspProgram>

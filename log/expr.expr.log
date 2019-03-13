@@ -1,0 +1,8 @@
+"1 + 2\n"
+ ==> RuntimeInteger(3)
+"1+2\n"
+ ==> RuntimeInteger(3)
+"1 + 2 + 3\n"
+ ==> RuntimeInteger(6)
+"1 - 2\n"
+ ==> RuntimeInteger(-1)

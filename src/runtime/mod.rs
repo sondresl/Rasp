@@ -24,9 +24,9 @@ mod runtime_tests {
 
     #[test]
     fn test_expr_stmt() {
-        let mut logger = Logger::new("log/expressions.log").unwrap();
-        let mut expr_logger = Logger::new("log/expressions.expr.log").unwrap();
-        let mut sc = Scanner::new("asp/expressions.asp").unwrap();
+        let mut logger = Logger::new("log/expr.log").unwrap();
+        let mut expr_logger = Logger::new("log/expr.expr.log").unwrap();
+        let mut sc = Scanner::new("asp/expr.asp").unwrap();
     
         loop {
             let line = sc.fill_token_buffer();

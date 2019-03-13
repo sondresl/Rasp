@@ -42,8 +42,8 @@ impl AspTerm {
             .zip(self.oprs.iter())
             .fold(self.factors[0].eval(cur_scope), |rv, (factor, opr)| {
                 match opr {
-                    AspTermOpr::Plus =>  rv.add(factor.eval(cur_scope)),
-                    _ => unimplemented!()
+                    AspTermOpr::Plus  => rv.add(factor.eval(cur_scope)),
+                    AspTermOpr::Minus => rv.minus(factor.eval(cur_scope)),
                 }
             })
     }
