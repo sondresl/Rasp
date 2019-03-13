@@ -33,7 +33,7 @@ mod runtime_tests {
             let a = AspExpr::parse(&mut sc, &mut logger).unwrap();
             println!("{:?}", a);
             sc.skip(Token::Newline);
-            logger.write(&format!("{:?}", a.eval(&mut Scope::new(None))));
+            logger.write(&format!(" ==> {:?}", a.eval(&mut Scope::new(None))));
         };
     }
 }
