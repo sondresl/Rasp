@@ -30,11 +30,13 @@ fn main() {
     let logfile  = format!("log/{}.log", &filename[..4]);
 
     println!("This is the Rasp Interpreter");
-    println!("Parsing {}", filename);
-    let mut sc = Scanner::new(&infile).unwrap();
 
     println!("Writing to log file '{}' ... ", logfile);
     let mut logger = Logger::new(&logfile).unwrap();
+
+    println!("Parsing {}", filename);
+    let mut sc = Scanner::new(&infile).unwrap();
+
 
     let program = AspProgram::parse(&mut sc, &mut logger).unwrap_or_else(|p| {
         println!("{}", "Error! Failed to parse program:".red());

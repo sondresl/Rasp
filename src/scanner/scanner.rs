@@ -48,20 +48,26 @@ impl Scanner {
         self.token_buffer.contains(&Token::Equal)
     }
 
-    fn scan_line(&mut self) {
+    fn scan_line(&mut self, s: &mut String) {
         self.cur_line += 1;
         let mut line = String::new();
-        match self.reader.read_line(&mut line) {
+
+        let it = self.reader.read_line(&mut line);
+        s.push_str(&dbg!(&line)[..]);
+
+        match it {
             Err(e) => panic!(format!("Error encountered during scan_line:\n{:?}", e)),
             Ok(0)  => self.token_buffer.push_back(EoF),
             Ok(_)  => scan_line_tokens(line, &mut self.token_buffer),
         }
     }
 
-    fn fill_token_buffer(&mut self) {
+    pub fn fill_token_buffer(&mut self) -> String {
+        let mut s = String::new();
         while self.token_buffer.is_empty() {
-            self.scan_line()
+            self.scan_line(&mut s)
         }
+        s
     }
 
 }

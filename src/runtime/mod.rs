@@ -28,10 +28,13 @@ mod runtime_tests {
         let mut logger = Logger::new("log/expressions.log").unwrap();
         let mut sc = Scanner::new("asp/expressions.asp").unwrap();
     
-        while sc.cur_token() != &EoF {
-            // Print line
+        loop {
+            let line = sc.fill_token_buffer();
+            if line.is_empty() {
+                break;
+            }
+            logger.write(&format!("{:?}", line));
             let a = AspExpr::parse(&mut sc, &mut logger).unwrap();
-            println!("{:?}", a);
             sc.skip(Token::Newline);
             logger.write(&format!("{:?}", a.eval(&mut Scope::new(None))));
         };
