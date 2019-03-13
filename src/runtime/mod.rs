@@ -19,13 +19,13 @@ mod runtime_tests {
         let mut sc = Scanner::new("asp/expressions.asp").unwrap();
         let program = AspProgram::parse(&mut sc, &mut logger).unwrap();
         let x = program.eval();
-        dbg!(x);
     }
 
 
     #[test]
     fn test_expr_stmt() {
         let mut logger = Logger::new("log/expressions.log").unwrap();
+        let mut expr_logger = Logger::new("log/expressions.expr.log").unwrap();
         let mut sc = Scanner::new("asp/expressions.asp").unwrap();
     
         loop {
@@ -33,10 +33,10 @@ mod runtime_tests {
             if line.is_empty() {
                 break;
             }
-            logger.write(&format!("{:?}", line));
+            expr_logger.write(&format!("{:?}", line));
             let a = AspExpr::parse(&mut sc, &mut logger).unwrap();
             sc.skip(Token::Newline);
-            logger.write(&format!(" ==> {:?}", a.eval(&mut Scope::new(None))));
+            expr_logger.write(&format!(" ==> {:?}", a.eval(&mut Scope::new(None))));
         };
     }
 }

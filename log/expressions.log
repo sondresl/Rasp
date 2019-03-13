@@ -1,4 +1,4 @@
-"1 + 2\n"<AspExpr>
+<AspExpr>
   <AspAndTest>
     <AspNotTest>
       <AspComparison>
@@ -26,7 +26,7 @@
     </AspNotTest>
   </AspAndTest>
 </AspExpr>
-RuntimeInteger(3)"43 + 1005"<AspExpr>
+<AspExpr>
   <AspAndTest>
     <AspNotTest>
       <AspComparison>
@@ -54,4 +54,3 @@ RuntimeInteger(3)"43 + 1005"<AspExpr>
     </AspNotTest>
   </AspAndTest>
 </AspExpr>
-RuntimeInteger(1048)

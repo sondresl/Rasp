@@ -53,7 +53,7 @@ impl Scanner {
         let mut line = String::new();
 
         let it = self.reader.read_line(&mut line);
-        s.push_str(&dbg!(&line)[..]);
+        s.push_str(&line[..]);
 
         match it {
             Err(e) => panic!(format!("Error encountered during scan_line:\n{:?}", e)),

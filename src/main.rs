@@ -17,11 +17,6 @@ use crate::parser::asp_program::AspProgram;
 use crate::log::logger::Logger;
 use std::process::exit;
 use colored::Colorize;
-use crate::parser::error::AspParseError;
-use crate::scanner::token::Token::EoF;
-use crate::parser::asp_expr::AspExpr;
-use crate::runtime::runtime::Scope;
-use crate::scanner::token::Token;
 
 fn main() {
 
