@@ -27,4 +27,9 @@ impl Logger {
         self.file.write_fmt(format_args!("{}</{}>\n", str::repeat(" ", self.indent * 2), name))?;
         Ok(())
     }
+
+    pub fn write(&mut self, string: &str) -> io::Result<()> {
+        self.file.write_fmt(format_args!("{}", string))?;
+        Ok(())
+    }
 }

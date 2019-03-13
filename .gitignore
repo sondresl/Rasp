@@ -5,4 +5,3 @@ Cargo.lock
 tags
 .DS_Store
 rusty-tags.vi
-*.log

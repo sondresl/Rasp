@@ -17,6 +17,11 @@ use crate::parser::asp_program::AspProgram;
 use crate::log::logger::Logger;
 use std::process::exit;
 use colored::Colorize;
+use crate::parser::error::AspParseError;
+use crate::scanner::token::Token::EoF;
+use crate::parser::asp_expr::AspExpr;
+use crate::runtime::runtime::Scope;
+use crate::scanner::token::Token;
 
 fn main() {
 
@@ -40,6 +45,7 @@ fn main() {
 //    program.test_parser(&mut logger).expect("Error during test_parser");
     println!("Done");
 }
+
 
 // test_parser is the equivalent of the -testparser flag from INF2100.
 // It creates the AST, and then calls pretty print on the tree.
