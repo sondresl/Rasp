@@ -1,13 +1,15 @@
 
 use std::collections::HashMap;
 use crate::runtime::runtime::RuntimeValue::*;
+use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum RuntimeValue {
     RuntimeInteger(i64),
     RuntimeFloat(f64),
     RuntimeBoolean(bool),
     RuntimeString(String),
+    RuntimeFunc(fn(Vec<RuntimeValue>) -> RuntimeValue),
     RuntimeNone,
 }
 
@@ -43,6 +45,16 @@ impl RuntimeValue {
     }
 }
 
+impl fmt::Display for RuntimeValue {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            RuntimeString(v) => write!(f, "{}", v),
+            _ => unimplemented!(),
+        }
+    }
+}
+
+#[derive(Debug)]
 pub struct Scope {
     parent: Option<Box<Scope>>,
     map: HashMap<String, RuntimeValue>,
@@ -50,6 +62,26 @@ pub struct Scope {
 
 
 impl Scope {
+
+    pub fn create_standard_lib() -> Self {
+
+        let mut lib: HashMap<String, RuntimeValue> = HashMap::new();
+
+        lib.insert("print".to_string(), 
+                   RuntimeFunc(|args: Vec<RuntimeValue>| {
+            for v in args {
+                print!("{} ", v);
+            }
+            println!();
+            RuntimeValue::RuntimeNone
+        }));
+
+        let rv = Scope { parent: None, map: lib };
+
+        rv
+    }
+
+    
     pub fn new(sc: Option<Box<Scope>>) -> Scope {
         Scope {
             parent: sc,

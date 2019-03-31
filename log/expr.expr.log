@@ -6,3 +6,7 @@
  ==> RuntimeInteger(6)
 "1 - 2\n"
  ==> RuntimeInteger(-1)
+"\'Hei verden\'\n"
+ ==> RuntimeString("Hei verden")
+"\"Hei verden\"\n"
+ ==> RuntimeString("Hei verden")

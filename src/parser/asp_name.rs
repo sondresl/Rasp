@@ -4,7 +4,7 @@ use crate::parser::error::AspParseError;
 use crate::scanner::token::Token;
 
 #[derive(Debug)]
-pub struct AspName(String);
+pub struct AspName(pub String);
 
 impl AspName {
 

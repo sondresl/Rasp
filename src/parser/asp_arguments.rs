@@ -6,7 +6,7 @@ use crate::log::logger::Logger;
 
 #[derive(Debug)]
 pub struct AspArguments {
-    exprs: Vec<AspExpr>
+    pub exprs: Vec<AspExpr>
 }
 
 impl AspArguments {
@@ -31,4 +31,5 @@ impl AspArguments {
         logger.leave_parser("AspArguments")?;
         Ok(aa)
     }
+
 }

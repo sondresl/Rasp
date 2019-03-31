@@ -39,7 +39,10 @@ impl AspStmt {
 
     pub fn eval(&self, mut cur_scope: &mut Scope) -> RuntimeValue {
         match self {
-            Assignment(v) => v.eval(&mut cur_scope),
+            Assignment(v) => {
+                v.eval(&mut cur_scope);
+                RuntimeValue::RuntimeNone
+            },
             ExprStmt(v)   => v.eval(&mut cur_scope),
         }
     }

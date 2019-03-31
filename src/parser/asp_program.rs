@@ -33,7 +33,7 @@ impl AspProgram {
     /// This function should have a global scope, with builtin functions.
     ///
     pub fn eval(&self) -> RuntimeValue {
-        let mut sc = Scope::new(None);
+        let mut sc = Scope::create_standard_lib();
         let mut rv = RuntimeValue::RuntimeNone;
         for v in &self.stmts {
             rv = v.eval(&mut sc);

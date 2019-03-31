@@ -17,19 +17,26 @@ use crate::parser::asp_program::AspProgram;
 use crate::log::logger::Logger;
 use std::process::exit;
 use colored::Colorize;
+use std::env;
 
 fn main() {
+    
+    let args: Vec<String> = env::args().collect();
+    let filename = if args.len() < 2 {
+        "mini.asp".to_string()
+    } else {
+        args[1].to_string()
+    };
 
-    let filename = "mini.asp";
     let infile   = format!("asp/{}", filename);
     let logfile  = format!("log/{}.log", &filename[..4]);
 
-    println!("This is the Rasp Interpreter");
+    // println!("This is the Rasp Interpreter\n");
 
-    println!("Writing to log file '{}' ... ", logfile);
+    // println!("Writing to log file '{}' ... ", logfile);
     let mut logger = Logger::new(&logfile).unwrap();
 
-    println!("Parsing {}", filename);
+    // println!("Parsing {}", filename);
     let mut sc = Scanner::new(&infile).unwrap();
 
 
@@ -38,9 +45,9 @@ fn main() {
         println!("{}", p);
         exit(1);
     });
-    // program.eval();
+    program.eval();
 //    program.test_parser(&mut logger).expect("Error during test_parser");
-    println!("Done");
+    // println!("Done");
 }
 
 

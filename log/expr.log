@@ -120,3 +120,39 @@
     </AspNotTest>
   </AspAndTest>
 </AspExpr>
+<AspExpr>
+  <AspAndTest>
+    <AspNotTest>
+      <AspComparison>
+        <AspTerm>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspString>
+                </AspString>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+        </AspTerm>
+      </AspComparison>
+    </AspNotTest>
+  </AspAndTest>
+</AspExpr>
+<AspExpr>
+  <AspAndTest>
+    <AspNotTest>
+      <AspComparison>
+        <AspTerm>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspString>
+                </AspString>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+        </AspTerm>
+      </AspComparison>
+    </AspNotTest>
+  </AspAndTest>
+</AspExpr>

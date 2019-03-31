@@ -7,6 +7,7 @@ use crate::log::logger::Logger;
 use crate::parser::asp_integer::AspInteger;
 use crate::runtime::runtime::{Scope, RuntimeValue};
 use crate::runtime::runtime::RuntimeValue::RuntimeInteger;
+use crate::runtime::runtime::RuntimeValue::RuntimeString;
 
 #[derive(Debug)]
 pub enum AspAtom {
@@ -38,8 +39,13 @@ impl AspAtom {
 
     pub fn eval(&self, cur_scope: &mut Scope) -> RuntimeValue {
         match self {
-            AspAtom::Int(v) => RuntimeInteger(v.0),
-            _ => unimplemented!()
+            AspAtom::Int(v)    => RuntimeInteger(v.0),
+            AspAtom::String(v) => RuntimeString(v.0.clone()),
+            AspAtom::Name(v)   => {
+                let a = cur_scope.find(v.0.clone());
+                let a = a.expect("Asp atom");
+                (*a).clone()
+            }
         }
     }
 }

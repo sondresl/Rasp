@@ -31,8 +31,23 @@ impl AspPrimary {
     }
 
     pub fn eval(&self, cur_scope: &mut Scope) -> RuntimeValue {
-        //TODO
-        self.atom.eval(cur_scope)
+        let atom = self.atom.eval(cur_scope);
+        if let Some(suffix) = &self.suffix {
+            match suffix {
+                AspPrimarySuffix::Argument(v) => {
+                    let args: Vec<RuntimeValue> = v.exprs.iter().map(|e| e.eval(cur_scope)).collect();
+                    match atom {
+                        RuntimeValue::RuntimeFunc(f) => {
+                            return f(args);
+                        }
+                        _ => panic!("eval in asp_primary: Did not get a function!"),
+                    }
+                },
+                AspPrimarySuffix::Subscription(v) => unimplemented!(),
+            }
+        };
+
+        atom
     }
 
 }

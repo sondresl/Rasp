@@ -3,14 +3,13 @@ use crate::scanner::token::Token;
 use crate::parser::asp_name::AspName;
 use crate::parser::asp_expr::AspExpr;
 use crate::parser::error::AspParseError;
-use crate::runtime::runtime::RuntimeValue;
 use crate::runtime::runtime::Scope;
 use crate::log::logger::Logger;
 
 #[derive(Debug)]
 pub struct AspAssignment {
-    name: AspName,
-    expr: AspExpr
+    pub name: AspName,
+    pub expr: AspExpr
 }
 
 impl AspAssignment {
@@ -37,9 +36,9 @@ impl AspAssignment {
         asp_assignment
     }
 
-    pub fn eval(&self, cur_scope: &mut Scope) -> RuntimeValue {
-        // TODO
-        unimplemented!();
+    pub fn eval(&self, cur_scope: &mut Scope) {
+        let v = self.expr.eval(cur_scope);
+        cur_scope.insert(self.name.0.clone(), v);
     }
 
 }
