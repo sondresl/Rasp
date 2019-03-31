@@ -92,7 +92,8 @@ fn scan_line_tokens(line: String, tokens: &mut VecDeque<Token>) {
             ')'       => (Token::RightPar,  1),
             '+'       => (Token::Plus,      1),
             '-'       => (Token::Minus,     1),
-            '\''      => scan_string(&chars[index + 1..]),
+            '\'' |
+            '"'       => scan_string(&chars[index + 1..]),
             '1'...'9' => scan_number(&chars[index..]),
             '_'       |
             'a'...'z' |
@@ -127,7 +128,7 @@ fn scan_string(chars: &[char]) -> (Token, usize) {
     let mut string = String::new();
     for c in chars.iter() {
         offset += 1;
-        if *c == '\'' {
+        if *c == '\'' || *c == '"' {
             break;
         }
         string.push(*c);
