@@ -16,7 +16,7 @@ impl AspAndTest {
         logger.enter_parser("AspAndTest")?;
 
         // TODO
-        let a = AspAndTest { not_tests: vec![ AspNotTest::parse(sc, logger)?  ] };
+        let a = AspAndTest { not_tests: vec![ AspNotTest::parse(sc, logger)? ] };
 
         logger.leave_parser("AspAndTest")?;
         Ok(a)

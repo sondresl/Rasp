@@ -90,12 +90,8 @@ impl Scope {
     }
 
     pub fn find(&self, key: String) -> Option<&RuntimeValue> {
-        self.map.get(&key).or_else(|| 
-            if let Some(m) = &self.parent {
-                m.find(key)
-            } else { 
-                None 
-            })
+        self.map.get(&key)
+                .or_else(|| self.parent.as_ref().and_then(|m| m.find(key)))
     }
 
     pub fn insert(&mut self, key: String, val: RuntimeValue) {

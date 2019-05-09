@@ -1,10 +1,10 @@
 ## Notes on current state of project
 
-### Pretty print / test_parser
-The current implementation of test_parser is a mix between test_parser and pretty print from the INF2100-project. The original project creates the logfile during parsing.  Currently, it is created by calling a separate test_parser functino on the ast.
+### Pretty print / test\_parser
+The current implementation of test\_parser is a mix between test\_parser and pretty print from the INF2100-project. The original project creates the logfile during parsing.  Currently, it is created by calling a separate test\_parser functino on the ast.
 
-#### Indentation of test_parser
-During the write to test_parser output, indents are written first, then the line we want.
+#### Indentation of test\_parser
+During the write to test\_parser output, indents are written first, then the line we want.
 I find this to be an ugly solution. Is there maybe a better way to pad the output?
 
 ```rust
@@ -21,4 +21,8 @@ functions.
 The logger currently returns unchecked results because it is writing to file.
 ParserError need to implement From<io error> or something.
 ParserError also should be an enum with a few variants, and possibly using the failure crate.
+
+## TODO (Not the obvious ones)
+
+ - Rewrite enter\_parser into a higher-order function.
 
