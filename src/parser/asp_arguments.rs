@@ -27,7 +27,7 @@ impl AspArguments {
             break;
         }
         sc.skip(Token::RightPar)?;
-        sc.skip(Token::Newline)?;
+        // sc.skip(Token::Newline)?; // TODO Should this be here? Not there in Asp.
         logger.leave_parser("AspArguments")?;
         Ok(aa)
     }

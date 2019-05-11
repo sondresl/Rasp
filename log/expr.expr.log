@@ -4,9 +4,24 @@
  ==> RuntimeInteger(3)
 "1 + 2 + 3\n"
  ==> RuntimeInteger(6)
-"1 - 2\n"
- ==> RuntimeInteger(-1)
+"1 - 2.0\n"
+ ==> RuntimeFloat(-1.0)
+"10 - 4.5\n"
+ ==> RuntimeFloat(5.5)
+"print(\'Hello world!\')\n"
+ ==> RuntimeNone
 "\'Hei verden\'\n"
  ==> RuntimeString("Hei verden")
 "\"Hei verden\"\n"
  ==> RuntimeString("Hei verden")
+"2 * 4\n"
+ ==> RuntimeInteger(8)
+"11 * 0\n"
+ ==> RuntimeInteger(0)
+"3.0 * 3.0\n"
+ ==> RuntimeFloat(9.0)
+"10 / 2\n"
+ ==> RuntimeFloat(5.0)
+"11 / 3\n"
+ ==> RuntimeFloat(3.6666666666666665)
+"25.0 / 5.0\n"

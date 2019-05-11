@@ -19,7 +19,7 @@ pub mod asp_factor_prefix;
 pub mod asp_primary;
 pub mod asp_primary_suffix;
 pub mod asp_subscription;
-pub mod asp_integer;
+pub mod asp_literals;
 
 #[cfg(test)]
 mod parser_tests {

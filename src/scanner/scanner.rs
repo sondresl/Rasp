@@ -29,19 +29,19 @@ impl Scanner {
 
     pub fn cur_token(&mut self) -> &Token {
         self.fill_token_buffer();
-        self.token_buffer.front().unwrap()
+        self.token_buffer.front().expect("cur_token: Should have been a token here!")
     }
 
 
     pub fn next_token(&mut self) -> Token {
         self.fill_token_buffer();
-        return self.token_buffer.pop_front().unwrap();
+        self.token_buffer.pop_front().expect("next_token")
     }
 
     pub fn skip(&mut self, token: Token) -> Result<(), AspParseError> {
         let t = self.next_token();
         if t == token { return Ok(()) }
-        return Err(AspParseError::Expected{expected:token, found:t, line_number:self.cur_line as usize})
+        Err(AspParseError::Expected{expected:token, found:t, line_number:self.cur_line as usize})
     }
 
     pub fn has_equal_token(&self) -> bool {
@@ -63,11 +63,11 @@ impl Scanner {
     }
 
     pub fn fill_token_buffer(&mut self) -> String {
-        let mut s = String::new();
+        let mut buffer = String::new();
         while self.token_buffer.is_empty() {
-            self.scan_line(&mut s)
+            self.scan_line(&mut buffer)
         }
-        s
+        buffer
     }
 
 }
@@ -92,9 +92,11 @@ fn scan_line_tokens(line: String, tokens: &mut VecDeque<Token>) {
             ')'       => (Token::RightPar,  1),
             '+'       => (Token::Plus,      1),
             '-'       => (Token::Minus,     1),
-            '\'' |
+            '*'       => (Token::Multiply,  1),
+            '/'       => (Token::Divide,    1),
+            '\''      |
             '"'       => scan_string(&chars[index + 1..]),
-            '1'...'9' => scan_number(&chars[index..]),
+            '0'...'9' => scan_number(&chars[index..]),
             '_'       |
             'a'...'z' |
             'A'...'Z' => scan_name(&chars[index..]),
@@ -121,8 +123,7 @@ fn scan_name(chars: &[char]) -> (Token, usize) {
     (Token::Name(name), offset)
 }
 
-/// Scans until the next '.
-/// Currently only implemented for single quotes.
+/// Scans until the next ' or ".
 fn scan_string(chars: &[char]) -> (Token, usize) {
     let mut offset = 1;
     let mut string = String::new();
@@ -136,15 +137,24 @@ fn scan_string(chars: &[char]) -> (Token, usize) {
     (Token::StringLiteral(string), offset)
 }
 
+/// Scans ints and floats
 fn scan_number(chars: &[char]) -> (Token, usize) {
     let mut offset = 0;
     let mut number = String::new();
+    let mut float = false;
     for c in chars.iter() {
+        if c == &'.' {
+            number.push(*c);
+            offset += 1;
+            float = true;
+            continue;
+        }
         if !c.is_numeric() {
             break;
         }
         number.push(*c);
         offset += 1;
     }
+    if float { return (Token::FloatLiteral(number.parse().unwrap()), offset); }
     (Token::IntegerLiteral(number.parse().unwrap()), offset)
 }

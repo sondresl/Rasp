@@ -6,7 +6,9 @@ use crate::parser::error::AspParseError;
 #[derive(Debug)]
 pub enum AspTermOpr {
     Plus,
-    Minus
+    Minus,
+    Multiply,
+    Divide,
 }
 
 impl AspTermOpr {
@@ -18,6 +20,8 @@ impl AspTermOpr {
         let a = match sc.next_token() {
             Token::Plus => AspTermOpr::Plus,
             Token::Minus => AspTermOpr::Minus,
+            Token::Multiply => AspTermOpr::Multiply,
+            Token::Divide => AspTermOpr::Divide,
             _            => return Err(AspParseError::IDK), // TODO
         };
 

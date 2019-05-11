@@ -30,8 +30,46 @@ impl RuntimeValue {
         match self {
             RuntimeInteger(v1) => match other {
                 RuntimeInteger(v2) => RuntimeInteger(v1 - v2),
+                RuntimeFloat(v2)   => RuntimeFloat(v1 as f64 - v2),
                 _ => unimplemented!()
             },
+            _ => unimplemented!()
+        }
+    }
+    
+    pub fn multiply(self, other: RuntimeValue) -> RuntimeValue {
+        match self {
+            RuntimeInteger(v1) => match other {
+                RuntimeInteger(v2) => RuntimeInteger(v1 * v2),
+                RuntimeFloat(v2) => RuntimeFloat(v1 as f64 * v2),
+                _ => self.multiply(other.int()),
+            },
+            RuntimeFloat(v1) => match other {
+                RuntimeFloat(v2)   => RuntimeFloat(v1 * v2),
+                RuntimeInteger(v2) => RuntimeFloat(v1 + (v2 as f64)),
+                _ => self.multiply(other.float()), 
+            },
+
+            _ => unimplemented!()
+        }
+    }
+
+    pub fn divide(self, other: RuntimeValue) -> RuntimeValue {
+        match self {
+            RuntimeInteger(v1) => match other {
+                RuntimeInteger(v2) => RuntimeFloat(v1 as f64 / v2 as f64),
+                RuntimeFloat(v2)   => RuntimeFloat(v1 as f64 / v2),
+                _ => self.divide(other.int()),
+            },
+            _ => unimplemented!()
+        }
+
+    }
+
+    pub fn float(self) -> RuntimeValue {
+        match self {
+            RuntimeFloat(v)   => self,
+            RuntimeInteger(v) => RuntimeFloat(v as f64),
             _ => unimplemented!()
         }
     }

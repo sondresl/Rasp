@@ -13,5 +13,7 @@ pub enum Token {
     Newline,
     Plus,
     Minus,
+    Multiply,
+    Divide,
     EoF
 }

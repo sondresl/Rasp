@@ -48,6 +48,10 @@ mod scanner_tests {
             Plus,
             IntegerLiteral(2),
             Newline,
+            IntegerLiteral(2),
+            Multiply,
+            IntegerLiteral(2),
+            Newline,
             EoF
         ];
 

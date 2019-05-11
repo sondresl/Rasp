@@ -25,11 +25,15 @@ impl AspStmt {
         let asp_stmt = if sc.has_equal_token() {
             Assignment(AspAssignment::parse(sc, logger)?)
         } else {
-            logger.enter_parser("AspExprStmt")?;
-            let a = ExprStmt(AspExpr::parse(sc, logger)?);
-            sc.skip(Token::Newline); // TODO: Unhandled error. Program crashes here
-            logger.leave_parser("AspExprStmt")?;
-            a
+            match sc.cur_token() {
+                _ => {      // ExprStmt
+                    logger.enter_parser("AspExprStmt")?;
+                    let a = ExprStmt(AspExpr::parse(sc, logger)?);
+                    sc.skip(Token::Newline)?;
+                    logger.leave_parser("AspExprStmt")?;
+                    a
+                }
+            }
         };
 
         logger.leave_parser("AspStmt enum")?;

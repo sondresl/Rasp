@@ -110,6 +110,136 @@
           <AspFactor>
             <AspPrimary>
               <AspAtom>
+                <AspFloat>
+                </AspFloat>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+        </AspTerm>
+      </AspComparison>
+    </AspNotTest>
+  </AspAndTest>
+</AspExpr>
+<AspExpr>
+  <AspAndTest>
+    <AspNotTest>
+      <AspComparison>
+        <AspTerm>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspInteger>
+                </AspInteger>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+          <AspTermOpr>
+          </AspTermOpr>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspFloat>
+                </AspFloat>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+        </AspTerm>
+      </AspComparison>
+    </AspNotTest>
+  </AspAndTest>
+</AspExpr>
+<AspExpr>
+  <AspAndTest>
+    <AspNotTest>
+      <AspComparison>
+        <AspTerm>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspName>
+                </AspName>
+              </AspAtom>
+              <AspArguments>
+                <AspExpr>
+                  <AspAndTest>
+                    <AspNotTest>
+                      <AspComparison>
+                        <AspTerm>
+                          <AspFactor>
+                            <AspPrimary>
+                              <AspAtom>
+                                <AspString>
+                                </AspString>
+                              </AspAtom>
+                            </AspPrimary>
+                          </AspFactor>
+                        </AspTerm>
+                      </AspComparison>
+                    </AspNotTest>
+                  </AspAndTest>
+                </AspExpr>
+              </AspArguments>
+            </AspPrimary>
+          </AspFactor>
+        </AspTerm>
+      </AspComparison>
+    </AspNotTest>
+  </AspAndTest>
+</AspExpr>
+<AspExpr>
+  <AspAndTest>
+    <AspNotTest>
+      <AspComparison>
+        <AspTerm>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspString>
+                </AspString>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+        </AspTerm>
+      </AspComparison>
+    </AspNotTest>
+  </AspAndTest>
+</AspExpr>
+<AspExpr>
+  <AspAndTest>
+    <AspNotTest>
+      <AspComparison>
+        <AspTerm>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspString>
+                </AspString>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+        </AspTerm>
+      </AspComparison>
+    </AspNotTest>
+  </AspAndTest>
+</AspExpr>
+<AspExpr>
+  <AspAndTest>
+    <AspNotTest>
+      <AspComparison>
+        <AspTerm>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspInteger>
+                </AspInteger>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+          <AspTermOpr>
+          </AspTermOpr>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
                 <AspInteger>
                 </AspInteger>
               </AspAtom>
@@ -128,8 +258,18 @@
           <AspFactor>
             <AspPrimary>
               <AspAtom>
-                <AspString>
-                </AspString>
+                <AspInteger>
+                </AspInteger>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+          <AspTermOpr>
+          </AspTermOpr>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspInteger>
+                </AspInteger>
               </AspAtom>
             </AspPrimary>
           </AspFactor>
@@ -146,8 +286,102 @@
           <AspFactor>
             <AspPrimary>
               <AspAtom>
-                <AspString>
-                </AspString>
+                <AspFloat>
+                </AspFloat>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+          <AspTermOpr>
+          </AspTermOpr>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspFloat>
+                </AspFloat>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+        </AspTerm>
+      </AspComparison>
+    </AspNotTest>
+  </AspAndTest>
+</AspExpr>
+<AspExpr>
+  <AspAndTest>
+    <AspNotTest>
+      <AspComparison>
+        <AspTerm>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspInteger>
+                </AspInteger>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+          <AspTermOpr>
+          </AspTermOpr>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspInteger>
+                </AspInteger>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+        </AspTerm>
+      </AspComparison>
+    </AspNotTest>
+  </AspAndTest>
+</AspExpr>
+<AspExpr>
+  <AspAndTest>
+    <AspNotTest>
+      <AspComparison>
+        <AspTerm>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspInteger>
+                </AspInteger>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+          <AspTermOpr>
+          </AspTermOpr>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspInteger>
+                </AspInteger>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+        </AspTerm>
+      </AspComparison>
+    </AspNotTest>
+  </AspAndTest>
+</AspExpr>
+<AspExpr>
+  <AspAndTest>
+    <AspNotTest>
+      <AspComparison>
+        <AspTerm>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspFloat>
+                </AspFloat>
+              </AspAtom>
+            </AspPrimary>
+          </AspFactor>
+          <AspTermOpr>
+          </AspTermOpr>
+          <AspFactor>
+            <AspPrimary>
+              <AspAtom>
+                <AspFloat>
+                </AspFloat>
               </AspAtom>
             </AspPrimary>
           </AspFactor>

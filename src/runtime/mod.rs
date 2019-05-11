@@ -5,10 +5,6 @@ mod runtime_tests {
     use crate::parser::asp_program::AspProgram;
     use crate::log::logger::Logger;
     use crate::scanner::scanner::Scanner;
-    use std::process::exit;
-    use colored::Colorize;
-    use crate::parser::error::AspParseError;
-    use crate::scanner::token::Token::EoF;
     use crate::parser::asp_expr::AspExpr;
     use crate::runtime::runtime::Scope;
     use crate::scanner::token::Token;
@@ -27,6 +23,7 @@ mod runtime_tests {
         let mut logger = Logger::new("log/expr.log").unwrap();
         let mut expr_logger = Logger::new("log/expr.expr.log").unwrap();
         let mut sc = Scanner::new("asp/expr.asp").unwrap();
+        let mut stdlib = Scope::create_standard_lib();
     
         loop {
             let line = sc.fill_token_buffer();
@@ -36,7 +33,7 @@ mod runtime_tests {
             expr_logger.write(&format!("{:?}", line));
             let a = AspExpr::parse(&mut sc, &mut logger).unwrap();
             sc.skip(Token::Newline);
-            expr_logger.write(&format!(" ==> {:?}", a.eval(&mut Scope::new(None))));
+            expr_logger.write(&format!(" ==> {:?}", a.eval(&mut stdlib)));
         };
     }
 }
