@@ -1,4 +1,3 @@
-#![feature(range_contains)]
 #![allow(dead_code, unused_variables)]
 
 extern crate colored;
