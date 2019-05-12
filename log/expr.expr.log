@@ -4,6 +4,12 @@
  ==> RuntimeInteger(3)
 "1 + 2 + 3\n"
  ==> RuntimeInteger(6)
+"1 + 2.0\n"
+ ==> RuntimeFloat(3.0)
+"2.0 + 3\n"
+ ==> RuntimeFloat(5.0)
+"2.8 + 4.1\n"
+ ==> RuntimeFloat(6.8999999999999995)
 "1 - 2.0\n"
  ==> RuntimeFloat(-1.0)
 "10 - 4.5\n"
@@ -25,3 +31,10 @@
 "11 / 3\n"
  ==> RuntimeFloat(3.6666666666666665)
 "25.0 / 5.0\n"
+ ==> RuntimeFloat(5.0)
+"1234 / 0\n"
+ ==> RuntimeFloat(inf)
+"20 // 5\n"
+ ==> RuntimeInteger(4)
+"20 // 3\n"
+ ==> RuntimeInteger(6)

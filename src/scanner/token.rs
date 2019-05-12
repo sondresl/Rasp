@@ -15,5 +15,6 @@ pub enum Token {
     Minus,
     Multiply,
     Divide,
+    IntegerDiv,
     EoF
 }

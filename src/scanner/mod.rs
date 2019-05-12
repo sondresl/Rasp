@@ -52,6 +52,10 @@ mod scanner_tests {
             Multiply,
             IntegerLiteral(2),
             Newline,
+            IntegerLiteral(10),
+            IntegerDiv,
+            IntegerLiteral(3),
+            Newline,
             EoF
         ];
 

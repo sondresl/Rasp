@@ -1,4 +1,5 @@
 
+use std::ops::{Add, Sub, Div, Mul};
 use std::collections::HashMap;
 use crate::runtime::runtime::RuntimeValue::*;
 use std::fmt;
@@ -13,57 +14,72 @@ pub enum RuntimeValue {
     RuntimeNone,
 }
 
+impl Add for RuntimeValue {
+    type Output = RuntimeValue;
+
+    fn add(self, other: RuntimeValue) -> RuntimeValue {
+        match (self, other) {
+            (RuntimeInteger(v1), RuntimeInteger(v2)) => RuntimeInteger(v1 + v2),
+            (RuntimeInteger(v1), RuntimeFloat(v2))   => RuntimeFloat(v1 as f64 + v2),
+            (RuntimeFloat(v1),   RuntimeFloat(v2))   => RuntimeFloat(v1 + v2),
+            (RuntimeFloat(v1),   RuntimeInteger(v2)) => RuntimeFloat(v1 + v2 as f64),
+            _ => unimplemented!()
+        }
+    }
+}
+
+impl Sub for RuntimeValue {
+    type Output = RuntimeValue;
+
+    fn sub(self, other: RuntimeValue) -> RuntimeValue {
+        match (self, other) {
+            (RuntimeInteger(v1), RuntimeInteger(v2)) => RuntimeInteger(v1 - v2),
+            (RuntimeInteger(v1), RuntimeFloat(v2))   => RuntimeFloat(v1 as f64 - v2),
+            (RuntimeFloat(v1),   RuntimeFloat(v2))   => RuntimeFloat(v1 - v2),
+            (RuntimeFloat(v1),   RuntimeInteger(v2)) => RuntimeFloat(v1 - v2 as f64),
+            _ => unimplemented!()
+        }
+    }
+}
+
+impl Mul for RuntimeValue {
+    type Output = RuntimeValue;
+
+    fn mul(self, other: RuntimeValue) -> RuntimeValue {
+        match (self, other) {
+            (RuntimeInteger(v1), RuntimeInteger(v2)) => RuntimeInteger(v1 * v2),
+            (RuntimeInteger(v1), RuntimeFloat(v2))   => RuntimeFloat(v1 as f64 * v2),
+            (RuntimeFloat(v1),   RuntimeFloat(v2))   => RuntimeFloat(v1 * v2),
+            (RuntimeFloat(v1),   RuntimeInteger(v2)) => RuntimeFloat(v1 * v2 as f64),
+            _ => unimplemented!()
+        }
+    }
+}
+
+impl Div for RuntimeValue {
+    type Output = RuntimeValue;
+
+    fn div(self, other: RuntimeValue) -> RuntimeValue {
+        match (self, other) {
+            (RuntimeInteger(v1), RuntimeInteger(v2)) => RuntimeFloat(v1 as f64 / v2 as f64),
+            (RuntimeInteger(v1), RuntimeFloat(v2))   => RuntimeFloat(v1 as f64 / v2),
+            (RuntimeFloat(v1),   RuntimeFloat(v2))   => RuntimeFloat(v1 / v2),
+            (RuntimeFloat(v1),   RuntimeInteger(v2)) => RuntimeFloat(v1 / v2 as f64),
+            _ => unimplemented!()
+        }
+    }
+}
+
 impl RuntimeValue {
 
-    pub fn add(self, other: RuntimeValue) -> RuntimeValue {
-        match self {
-            RuntimeInteger(v1) => match other {
-                RuntimeInteger(v2) => RuntimeInteger(v1 + v2),
-                RuntimeFloat(v2) => RuntimeFloat(v1 as f64 + v2),
-                _ => self.add(other.int())
-            },
+    pub fn int_div(self, other: RuntimeValue) -> RuntimeValue {
+        match (self, other) {
+            (RuntimeInteger(v1), RuntimeInteger(v2)) => RuntimeInteger(v1 / v2),
+            (RuntimeInteger(v1), RuntimeFloat(v2))   => RuntimeInteger(v1 / v2 as i64),
+            (RuntimeFloat(v1),   RuntimeFloat(v2))   => RuntimeInteger(v1 as i64 / v2 as i64),
+            (RuntimeFloat(v1),   RuntimeInteger(v2)) => RuntimeInteger(v1 as i64 / v2),
             _ => unimplemented!()
         }
-    }
-
-    pub fn minus(self, other: RuntimeValue) -> RuntimeValue {
-        match self {
-            RuntimeInteger(v1) => match other {
-                RuntimeInteger(v2) => RuntimeInteger(v1 - v2),
-                RuntimeFloat(v2)   => RuntimeFloat(v1 as f64 - v2),
-                _ => unimplemented!()
-            },
-            _ => unimplemented!()
-        }
-    }
-    
-    pub fn multiply(self, other: RuntimeValue) -> RuntimeValue {
-        match self {
-            RuntimeInteger(v1) => match other {
-                RuntimeInteger(v2) => RuntimeInteger(v1 * v2),
-                RuntimeFloat(v2) => RuntimeFloat(v1 as f64 * v2),
-                _ => self.multiply(other.int()),
-            },
-            RuntimeFloat(v1) => match other {
-                RuntimeFloat(v2)   => RuntimeFloat(v1 * v2),
-                RuntimeInteger(v2) => RuntimeFloat(v1 + (v2 as f64)),
-                _ => self.multiply(other.float()), 
-            },
-
-            _ => unimplemented!()
-        }
-    }
-
-    pub fn divide(self, other: RuntimeValue) -> RuntimeValue {
-        match self {
-            RuntimeInteger(v1) => match other {
-                RuntimeInteger(v2) => RuntimeFloat(v1 as f64 / v2 as f64),
-                RuntimeFloat(v2)   => RuntimeFloat(v1 as f64 / v2),
-                _ => self.divide(other.int()),
-            },
-            _ => unimplemented!()
-        }
-
     }
 
     pub fn float(self) -> RuntimeValue {
@@ -86,7 +102,9 @@ impl RuntimeValue {
 impl fmt::Display for RuntimeValue {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            RuntimeString(v) => write!(f, "{}", v),
+            RuntimeString(v)  => write!(f, "{}", v),
+            RuntimeInteger(v) => write!(f, "{}", v),
+            RuntimeFloat(v)   => write!(f, "{}", v),
             _ => unimplemented!(),
         }
     }

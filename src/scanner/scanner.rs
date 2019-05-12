@@ -93,7 +93,11 @@ fn scan_line_tokens(line: String, tokens: &mut VecDeque<Token>) {
             '+'       => (Token::Plus,      1),
             '-'       => (Token::Minus,     1),
             '*'       => (Token::Multiply,  1),
-            '/'       => (Token::Divide,    1),
+            '/'       => 
+                match chars[index + 1] {
+                    '/'  => (Token::IntegerDiv, 2),
+                    _    => (Token::Divide,    1),
+                },
             '\''      |
             '"'       => scan_string(&chars[index + 1..]),
             '0'...'9' => scan_number(&chars[index..]),

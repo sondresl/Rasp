@@ -45,10 +45,38 @@
                       </AspInteger>
                     </AspAtom>
                   </AspPrimary>
+                  <AspTermOpr>
+                  </AspTermOpr>
+                  <AspPrimary>
+                    <AspAtom>
+                      <AspInteger>
+                      </AspInteger>
+                    </AspAtom>
+                  </AspPrimary>
                 </AspFactor>
-                <AspTermOpr>
-                </AspTermOpr>
+              </AspTerm>
+            </AspComparison>
+          </AspNotTest>
+        </AspAndTest>
+      </AspExpr>
+    </AspExprStmt>
+  </AspStmt enum>
+  <AspStmt enum>
+    <AspExprStmt>
+      <AspExpr>
+        <AspAndTest>
+          <AspNotTest>
+            <AspComparison>
+              <AspTerm>
                 <AspFactor>
+                  <AspPrimary>
+                    <AspAtom>
+                      <AspInteger>
+                      </AspInteger>
+                    </AspAtom>
+                  </AspPrimary>
+                  <AspTermOpr>
+                  </AspTermOpr>
                   <AspPrimary>
                     <AspAtom>
                       <AspInteger>

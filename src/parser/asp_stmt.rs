@@ -26,7 +26,8 @@ impl AspStmt {
             Assignment(AspAssignment::parse(sc, logger)?)
         } else {
             match sc.cur_token() {
-                _ => {      // ExprStmt
+                // ExprStmt
+                _ => {
                     logger.enter_parser("AspExprStmt")?;
                     let a = ExprStmt(AspExpr::parse(sc, logger)?);
                     sc.skip(Token::Newline)?;

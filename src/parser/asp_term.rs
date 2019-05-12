@@ -15,7 +15,7 @@ pub struct AspTerm {
 
 impl AspTerm {
 
-    pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspTerm,AspParseError> {
+    pub fn parse(sc: &mut Scanner, logger: &mut Logger) -> Result<AspTerm, AspParseError> {
 
         logger.enter_parser("AspTerm")?;
 
@@ -24,13 +24,11 @@ impl AspTerm {
 
         loop {
             // TODO: Prefix
-            factors.push(AspFactor::parse(sc, logger)?);
+            factors.push(AspFactor::parse(sc, logger)?); 
             match sc.cur_token() {
-                &Token::Plus      |
-                &Token::Minus     |
-                &Token::Multiply  |
-                &Token::Divide    => oprs.push(AspTermOpr::parse(sc, logger)?),
-                _                 => break
+                &Token::Plus  |
+                &Token::Minus => oprs.push(AspTermOpr::parse(sc, logger)?),
+                _             => break
             };
         }
 
@@ -44,10 +42,8 @@ impl AspTerm {
             .zip(self.oprs.iter())
             .fold(self.factors[0].eval(cur_scope), |rv, (factor, opr)| {
                 match opr {
-                    AspTermOpr::Plus     => rv.add(factor.eval(cur_scope)),
-                    AspTermOpr::Minus    => rv.minus(factor.eval(cur_scope)),
-                    AspTermOpr::Multiply => rv.multiply(factor.eval(cur_scope)),
-                    AspTermOpr::Divide   => rv.divide(factor.eval(cur_scope)),
+                    AspTermOpr::Plus       => rv + factor.eval(cur_scope),
+                    AspTermOpr::Minus      => rv - factor.eval(cur_scope),
                 }
             })
     }
